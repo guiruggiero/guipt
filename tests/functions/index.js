@@ -7,6 +7,6 @@ exports.helloWorld2gen = onRequest({cors: true}, (request, response) => {
     name = "undefined";
   }
 
-  console.log("name passed is " + name);
+  console.log("Name passed is " + name);
   response.send("Hello from GuiPT, " + name + "!");
 });
