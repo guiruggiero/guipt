@@ -1,6 +1,6 @@
 // const fs = require("node:fs");
 
-import fs from "node:fs";
+import fs from "fs";
 
 fs.readFile("../prompt.txt", "utf8", (err, data) => {
   if (err) {
