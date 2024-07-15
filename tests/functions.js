@@ -56,3 +56,11 @@ exports.secret = onRequest({cors: true}, (request, response) => {
 
 //   response.send("Logged!");
 // });
+
+// .env content got Firestore
+// FB_API_KEY="AIzaSyDOa3qhxiNI_asmIo1In1UF_qNjO1qllBE"
+// FB_AUTH_DOMAIN="guiruggiero.firebaseapp.com"
+// FB_PROJECT_ID="guiruggiero"
+// FB_STORAGE_BUCKET="guiruggiero.appspot.com"
+// FB_MESSAGING_SENDER_ID="49247152565"
+// FB_APP_ID="1:49247152565:web:eb614bed7a4cf43ed611fc"
