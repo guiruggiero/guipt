@@ -2,14 +2,14 @@
 const {onRequest} = require("firebase-functions/v2/https");
 
 const fs = require("fs");
-let promptRead = "";
-fs.readFile("prompt.txt", "utf8", (err, data) => {
-  if (err) {
-    console.error(err);
-  }
+// let promptRead = "";
+// fs.readFile("prompt.txt", "utf8", (err, data) => {
+//   if (err) {
+//     console.error(err);
+//   }
 
-  promptRead = data;
-});
+//   promptRead = data;
+// });
 
 exports.helloWorld = onRequest({cors: true}, (request, response) => {
   let name = request.query.name;
@@ -22,7 +22,10 @@ exports.helloWorld = onRequest({cors: true}, (request, response) => {
 });
 
 exports.readFile = onRequest({cors: true}, (request, response) => {
-  response.send("Data: " + promptRead);
+  // response.send("Data: " + promptRead);
+
+  const instructions = fs.readFileSync("prompt.txt", "utf8");
+  response.send(instructions);
 });
 
 exports.secret = onRequest({cors: true}, (request, response) => {
@@ -52,7 +55,4 @@ exports.secret = onRequest({cors: true}, (request, response) => {
 //   addDoc(collection(db, mode), "test"); // await?
 
 //   response.send("Logged!");
-// });
-
-// exports.gemini = onRequest({cors: true}, (request, response) => {
 // });

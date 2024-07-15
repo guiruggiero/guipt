@@ -16,7 +16,7 @@ const prompt_user = new prompt();
 const model_chosen = "gemini-1.5-flash";
 // const model_chosen = "gemini-1.0-pro";
 
-let instructions = fs.readFileSync("../prompt.txt", "utf8");
+let instructions = fs.readFileSync("prompt.txt", "utf8");
 // console.log(instructions);
 
 const generationConfig = {
