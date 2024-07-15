@@ -6,7 +6,6 @@ import axios from "axios";
 
 const prompt_user = new prompt();
 
-// Multi-turn chat
 async function multi_turn() {
   console.log("Starting chat. Enter 'quit' to exit.\n");
 

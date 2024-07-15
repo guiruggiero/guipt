@@ -1,11 +1,11 @@
-import {onRequest} from "firebase-functions/v2/https";
+const {onRequest} = require("firebase-functions/v2/https");
+const fs = require("fs");
+const {GoogleGenerativeAI, HarmCategory, HarmBlockThreshold} =
+    require("@google/generative-ai");
 
-import * as fs from "fs";
 const instructions = fs.readFileSync("prompt.txt", "utf8");
 
-import {GoogleGenerativeAI, HarmCategory, HarmBlockThreshold}
-  from "@google/generative-ai";
-const apiKey:string = process.env.GEMINI_API_KEY!;
+const apiKey = process.env.GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(apiKey);
 
 // const modelChosen = "gemini-1.5-pro";
@@ -47,11 +47,14 @@ const model = genAI.getGenerativeModel({
 });
 
 exports.guipt = onRequest({cors: true}, async (request, response) => {
-  let chatHistory = request.query.history;
-  if (!chatHistory) {
-    chatHistory = [];
-  }
+  // let chatHistory = request.query.history;
+  // if (!chatHistory) {
+  //   chatHistory = [];
+  // }
   // console.log(history);
+
+  // const chat = model.startChat({history: chatHistory}); // TODO
+  const chat = model.startChat();
 
   let userInput = request.query.prompt;
   if (!userInput) {
@@ -59,7 +62,6 @@ exports.guipt = onRequest({cors: true}, async (request, response) => {
   }
   // console.log(prompt_user);
 
-  const chat = model.startChat({ history: chatHistory });
   const result = await chat.sendMessage(userInput);
   const guiptResponse = await result.response;
   const guiptResponseText = guiptResponse.text();
