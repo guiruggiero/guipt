@@ -1,16 +1,20 @@
 const {onRequest} = require("firebase-functions/v2/https");
-const fs = require("fs");
 const {GoogleGenerativeAI, HarmCategory, HarmBlockThreshold} =
-    require("@google/generative-ai");
+  require("@google/generative-ai");
+const fs = require("fs");
 
-const instructions = fs.readFileSync("prompt.txt", "utf8");
-
+// Initializations
 const apiKey = process.env.GEMINI_API_KEY;
+// console.log(apiKey);
 const genAI = new GoogleGenerativeAI(apiKey);
 
+// Model setup
 // const modelChosen = "gemini-1.5-pro";
 const modelChosen = "gemini-1.5-flash";
 // const modelChosen = "gemini-1.0-pro";
+
+const instructions = fs.readFileSync("prompt.txt", "utf8");
+// console.log(instructions);
 
 const generationConfig = {
   temperature: 0.7, // default 1
@@ -19,6 +23,7 @@ const generationConfig = {
   maxOutputTokens: 400,
   responseMimeType: "text/plain",
 };
+// console.log(generationConfig);
 
 const safetySettings = [
   {
@@ -38,6 +43,7 @@ const safetySettings = [
     threshold: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
   },
 ];
+// console.log(safetySettings);
 
 const model = genAI.getGenerativeModel({
   model: modelChosen,
@@ -46,25 +52,30 @@ const model = genAI.getGenerativeModel({
   safetySettings,
 });
 
+// TODO: remove cors to protect invocation?
 exports.guipt = onRequest({cors: true}, async (request, response) => {
-  // let chatHistory = request.query.history;
-  // if (!chatHistory) {
-  //   chatHistory = [];
-  // }
-  // console.log(history);
+  // Gets chat history from request
+  let chatHistory = request.query.history;
+  if (!chatHistory) {
+    chatHistory = [];
+  }
+  // console.log("chatHistory: " + chatHistory);
 
-  // const chat = model.startChat({history: chatHistory}); // TODO
-  const chat = model.startChat();
+  // Initializes the chat
+  // const chat = model.startChat();
+  const chat = model.startChat({history: chatHistory});
 
+  // Gets user prompt from request
   let userInput = request.query.prompt;
   if (!userInput) {
-    userInput = "Hi";
+    userInput = "Hi, what can you do?";
   }
-  // console.log(prompt_user);
 
+  // Sends user prompt and gets model response
   const result = await chat.sendMessage(userInput);
   const guiptResponse = await result.response;
   const guiptResponseText = guiptResponse.text();
 
+  // Returns model response back to API caller
   response.send(guiptResponseText);
 });
