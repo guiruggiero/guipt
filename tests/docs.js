@@ -1,7 +1,6 @@
 import {PROMPT_URL} from "../../secrets/guiruggiero.mjs";
 import jsdom from "jsdom";
 import {htmlToText} from "html-to-text";
-import fs from "fs";
 
 const url = PROMPT_URL;
 
@@ -25,13 +24,5 @@ const contentText = htmlToText(contentHTML, {
     wordwrap: null,
 });
 // console.log(contentText);
-
 const contentTextClean = contentText.replace(/\n{2,}/g, '\n');
-
-// TODO: if size =< prompt-backup.txt, or certain works don't exist, skip
-fs.writeFileSync("../functions/prompt.txt", contentTextClean, 'utf-8', error => {
-    if (error) {
-        console.error(error);
-        // TODO: copy from prompt-backup.txt
-    }
-});
+// console.log(contentTextClean);

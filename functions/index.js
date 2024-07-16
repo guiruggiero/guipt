@@ -75,30 +75,3 @@ exports.guipt = onRequest({cors: true}, async (request, response) => {
   // Returns model response back to API caller
   response.send(guiptResponseText);
 });
-
-// --
-
-const {onSchedule} = require("firebase-functions/v2/scheduler");
-const jsdom = require("jsdom");
-const {htmlToText} = require("html-to-text");
-
-const url = process.env.PROMPT_URL;
-
-// Run once a day at midnight, for manual run: https://console.cloud.google.com/cloudscheduler
-exports.updatePrompt = onSchedule("every day 00:00", async (event) => {
-  const response = await fetch(url);
-  const document = await response.text();
-
-  const dom = new jsdom.JSDOM(document);
-  const contentHTML = dom.window.document.
-      querySelectorAll("div.doc-content")[0].innerHTML;
-
-  const contentText = htmlToText(contentHTML, {wordwrap: null});
-  const contentTextClean = contentText.replace(/\n{2,}/g, "\n");
-
-  fs.writeFileSync("prompt.txt", contentTextClean, "utf-8", (error) => {
-    if (error) {
-      console.error(error);
-    }
-  });
-});
