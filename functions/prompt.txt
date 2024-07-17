@@ -86,7 +86,11 @@ Procter & Gamble - São Paulo, Brazil - from January 2012 to December 2013
 Sales Supervisor - Ecommerce
 - Created eCommerce channel in Brazil; designed go-to-market strategy, established trade terms, and structured multifunctional team, growing net sales by 70% and awarded “Thought Leader” by Global Team (out of 95K+ employees)
 - Trained employees and promoted P&G in many recruiting events; instructed 200+ people in sales techniques and eCommerce, receiving "Power of Leadership” and “Power of People” national awards
-- After internship, ranked first out of 40 in company-wide hiring process
+--
+Procter & Gamble - São Paulo, Brazil - from January 2010 to December 2011
+Sales Intern - Drugstores
+- Ranked first out of 40 in company-wide hiring process and received the “Execution with Excellence” national award
+- Supervised a broker sales representative with a portfolio of five mid-sized customers, reaching over 200+ stores with all brands and growing net sales 27% in the first year and 43% in the second, ahead of team and country averages
 ==
 Additional information
 - Hobbyist coder in Python, VBA, SQL, HTML/CSS, JavaScript; developing an app in React Native with Expo
