@@ -49,7 +49,6 @@ const model = genAI.getGenerativeModel({
   safetySettings,
 });
 
-// TODO: remove cors to protect invocation?
 exports.guipt = onRequest({cors: true}, async (request, response) => {
   // Gets chat history from request
   let chatHistory = request.query.history;
