@@ -4,13 +4,13 @@ import {cloudFunctionURL} from "../secrets/guiruggiero.mjs";
 // console.log(cloudFunctionURL);
 
 // Initializations
-const prompt_user = new prompt();
+const promptUser = new prompt();
 let guiptResponse = "";
 let chatHistory = [];
 
 console.log("Starting chat. Enter 'quit' to exit.\n");
 
-let input = prompt_user("User: ");
+let input = promptUser("User: ");
 
 while (input != "quit") {
   // Calling Gemini API via Firebase Cloud Function
@@ -33,7 +33,7 @@ while (input != "quit") {
     // console.log(chatHistory);
     // console.log("\n");
 
-    input = prompt_user("User: ");
+    input = promptUser("User: ");
 }
 
 console.log("\nChat terminated.\n");

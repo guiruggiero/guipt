@@ -1,11 +1,11 @@
 // const prompt = require("prompt-sync")({ sigint: true });
 
 import prompt from "prompt-sync";
-const prompt_user = new prompt();
+const promptUser = new prompt();
 
 let input = "";
 
 while (input != "quit") {
-    input = prompt_user("Enter a command ('quit' to exit): ");
+    input = promptUser("Enter a command ('quit' to exit): ");
     console.log("You wrote: " + input + "\n");
 }

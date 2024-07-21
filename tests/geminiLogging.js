@@ -14,7 +14,7 @@ const apiKey = GEMINI_API_KEY;
 
 const genAI = new GoogleGenerativeAI(apiKey);
 
-const prompt_user = new prompt();
+const promptUser = new prompt();
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -22,9 +22,9 @@ const db = getFirestore(app);
 const mode = "dev";
 
 // Model setup
-// const model_chosen = "gemini-1.5-pro";
-const model_chosen = "gemini-1.5-flash";
-// const model_chosen = "gemini-1.0-pro";
+// const modelChosen = "gemini-1.5-pro";
+const modelChosen = "gemini-1.5-flash";
+// const modelChosen = "gemini-1.0-pro";
 
 let instructions = fs.readFileSync("../functions/prompt.txt", "utf8");
 // console.log(instructions);
@@ -57,41 +57,41 @@ const safetySettings = [
 ];
 
 const model = genAI.getGenerativeModel({
-  model: model_chosen,
+  model: modelChosen,
   systemInstruction: instructions,
   generationConfig,
   safetySettings,
 });
 
 // Simple text generation
-// async function text_input() {
+// async function textInput() {
 //   const result = await model.generateContent("What can you do?");
 //   const response = await result.response;
 //   const text = response.text();
 //   console.log(text);
 // }
 
-// text_input();
+// textInput();
 
 // Multi-turn chat
-async function multi_turn() {
+async function multiTurn() {
   const chat = model.startChat();
 
   console.log("Starting chat. Enter 'quit' to exit.\n");
 
-  let input = prompt_user("User: ");
+  let input = promptUser("User: ");
   const start = Timestamp.now();
 
   // Initializations
-  let turn_count = 1;
+  let turnCount = 1;
   let end = Timestamp.now();
-  let chat_data = {
+  let chatData = {
       start: start.toDate(),
   };
-  let turn_data = {};
+  let turnData = {};
 
   // Creates the chat document on Firestore
-  const chat_ref = await addDoc(collection(db, mode), chat_data);
+  const chatRef = await addDoc(collection(db, mode), chatData);
 
   while (input != "quit") {
     const result = await chat.sendMessage(input);
@@ -101,28 +101,28 @@ async function multi_turn() {
 
     end = Timestamp.now(); // Now, exiting is abandoning the chat (after response)
     
-    turn_data = {
-      turn: turn_count,
+    turnData = {
+      turn: turnCount,
       user: input,
       model: text,
     };
 
     // Creates the turn document on Firestore with a specific ID
-    const turn_ref = doc(collection(db, mode, chat_ref.id, "turns"), `turn_${turn_count}`);
-    await setDoc(turn_ref, turn_data); 
+    const turnRef = doc(collection(db, mode, chatRef.id, "turns"), `turn_${turnCount}`);
+    await setDoc(turnRef, turnData); 
 
-    turn_count++;
+    turnCount++;
 
-    input = prompt_user("User: ");
+    input = promptUser("User: ");
   }
 
-  chat_data = {
+  chatData = {
     end: end.toDate(),
-    turn_count: turn_count - 1,
+    turnCount: turnCount - 1,
   };
 
   // Updates the chat document on Firestore
-  await updateDoc(chat_ref, chat_data);
+  await updateDoc(chatRef, chatData);
 
   console.log("\nChat terminated.\n");
 
@@ -131,4 +131,4 @@ async function multi_turn() {
   // console.log(JSON.stringify(history, null, 2))
 }
 
-multi_turn();
+multiTurn();

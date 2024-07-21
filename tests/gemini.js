@@ -9,12 +9,12 @@ const apiKey = GEMINI_API_KEY;
 
 const genAI = new GoogleGenerativeAI(apiKey);
 
-const prompt_user = new prompt();
+const promptUser = new prompt();
 
 // Model setup
-// const model_chosen = "gemini-1.5-pro";
-const model_chosen = "gemini-1.5-flash";
-// const model_chosen = "gemini-1.0-pro";
+// const modelChosen = "gemini-1.5-pro";
+const modelChosen = "gemini-1.5-flash";
+// const modelChosen = "gemini-1.0-pro";
 
 let instructions = fs.readFileSync("../functions/prompt.txt", "utf8");
 // console.log(instructions);
@@ -47,29 +47,29 @@ const safetySettings = [
 ];
 
 const model = genAI.getGenerativeModel({
-  model: model_chosen,
+  model: modelChosen,
   systemInstruction: instructions,
   generationConfig,
   safetySettings,
 });
 
 // Simple text generation
-// async function text_input() {
+// async function textInput() {
 //   const result = await model.generateContent("What can you do?");
 //   const response = await result.response;
 //   const text = response.text();
 //   console.log(text);
 // }
 
-// text_input();
+// textInput();
 
 // Multi-turn chat
-async function multi_turn() {
+async function multiTurn() {
   const chat = model.startChat();
 
   console.log("Starting chat. Enter 'quit' to exit.\n");
 
-  let input = prompt_user("User: ");
+  let input = promptUser("User: ");
 
   while (input != "quit") {
     const result = await chat.sendMessage(input);
@@ -77,7 +77,7 @@ async function multi_turn() {
     const text = response.text();
     console.log("GuiPT: " + text);
     
-    input = prompt_user("User: ");
+    input = promptUser("User: ");
   }
 
   console.log("\nChat terminated.\n");
@@ -87,4 +87,4 @@ async function multi_turn() {
   // console.log(JSON.stringify(history, null, 2))
 }
 
-multi_turn();
+multiTurn();

@@ -9,7 +9,7 @@ import prompt from "prompt-sync";
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const prompt_user = new prompt();
+const promptUser = new prompt();
 
 const mode = "dev";
 // const mode = "mvp";
@@ -20,8 +20,8 @@ async function test() {
     console.log("Starting fake chat ('quit' to exit)");
 
     // Initializations
-    let turn_count = 1;
-    let user = prompt_user("User-" + turn_count + ": ");
+    let turnCount = 1;
+    let user = promptUser("User-" + turnCount + ": ");
     // console.log(user);
 
     const start = Timestamp.now();
@@ -32,47 +32,47 @@ async function test() {
     let model = "";
     let end = Timestamp.now();
 
-    let chat_data = {
+    let chatData = {
         start: start.toDate(),
-        // start_timestamp: start.seconds,
+        // startTimestamp: start.seconds,
     };
-    let turn_data = {};
+    let turnData = {};
 
     // Creates the chat document on Firestore
-    const chat_ref = await addDoc(collection(db, mode), chat_data);
-    // console.log("Document created with ID: ", chat_ref.id);
+    const chatRef = await addDoc(collection(db, mode), chatData);
+    // console.log("Document created with ID: ", chatRef.id);
 
     while (user != "quit") {
-        model = prompt_user("GuiPT-" + turn_count + ": ");
+        model = promptUser("GuiPT-" + turnCount + ": ");
         // console.log(model);
 
-        turn_data = {
-            turn: turn_count,
+        turnData = {
+            turn: turnCount,
             user: user,
             model: model,
         };
-        // console.log(turn_data);
+        // console.log(turnData);
 
         // Creates the turn document on Firestore with a specific ID
-        const turn_ref = doc(collection(db, mode, chat_ref.id, "turns"), `turn_${turn_count}`);
-        await setDoc(turn_ref, turn_data); 
+        const turnRef = doc(collection(db, mode, chatRef.id, "turns"), `turn_${turnCount}`);
+        await setDoc(turnRef, turnData); 
 
-        turn_count++;
+        turnCount++;
 
-        user = prompt_user("User-" + turn_count + ": ");
+        user = promptUser("User-" + turnCount + ": ");
         // console.log(user);
         end = Timestamp.now(); // Here, the only way of exiting is quitting
     }
 
-    chat_data = {
+    chatData = {
         end: end.toDate(),
-        // end_timestamp: end.seconds,
-        turn_count: turn_count - 1,
+        // endTimestamp: end.seconds,
+        turnCount: turnCount - 1,
     };
-    // console.log(chat_data);
+    // console.log(chatData);
 
     // Updates the chat document on Firestore
-    await updateDoc(chat_ref, chat_data);
+    await updateDoc(chatRef, chatData);
 
     console.log("Fake chat terminated");
 
