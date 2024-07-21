@@ -6,7 +6,7 @@ import prompt from "prompt-sync";
 
 import { firebaseConfig } from "../../secrets/guiruggiero.mjs";
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, updateDoc, doc, setDoc, Timestamp } from 'firebase/firestore/lite';
+import { getFirestore, collection, addDoc, updateDoc, doc, setDoc, Timestamp } from "firebase/firestore/lite";
 
 // Initializations
 const apiKey = GEMINI_API_KEY;

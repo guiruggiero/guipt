@@ -7,14 +7,14 @@ const fs = require("fs");
 const apiKey = process.env.GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(apiKey);
 
-// Model setup
-// const modelChosen = "gemini-1.5-pro";
+// Gemini variation - "gemini-1.5-flash", "gemini-1.5-pro", "gemini-1.0-pro"
 const modelChosen = "gemini-1.5-flash";
-// const modelChosen = "gemini-1.0-pro";
 
+// Get prompt instructions from file
 const instructions = fs.readFileSync("prompt.txt", "utf8");
 // console.log(instructions);
 
+// Model configuration
 const generationConfig = {
   temperature: 0.7, // default 1
   topP: 0.95, // default 0.95
@@ -23,6 +23,7 @@ const generationConfig = {
   responseMimeType: "text/plain",
 };
 
+// Model safety settings
 const safetySettings = [
   {
     category: HarmCategory.HARM_CATEGORY_HARASSMENT,
@@ -42,6 +43,7 @@ const safetySettings = [
   },
 ];
 
+// Model constructor
 const model = genAI.getGenerativeModel({
   model: modelChosen,
   systemInstruction: instructions,
@@ -50,23 +52,23 @@ const model = genAI.getGenerativeModel({
 });
 
 exports.guipt = onRequest({cors: true}, async (request, response) => {
-  // Gets chat history from request
+  // Get chat history from request
   let chatHistory = request.query.history;
   if (!chatHistory) {
     chatHistory = [];
   }
   // console.log("chatHistory: " + chatHistory);
 
-  // Initializes the chat
+  // Initialize the chat
   const chat = model.startChat({history: chatHistory});
 
-  // Gets user prompt from request
+  // Get user prompt from request
   let userInput = request.query.prompt;
   if (!userInput) {
     userInput = "Hi, what can you do?";
   }
 
-  // Sends user prompt and gets model response
+  // Gemini API call
   const result = await chat.sendMessage(userInput);
   const guiptResponse = await result.response;
   const guiptResponseText = guiptResponse.text();
