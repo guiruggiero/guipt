@@ -57,7 +57,7 @@ const {htmlToText} = require("html-to-text");
 const url = process.env.PROMPT_URL;
 
 // Run once a day at midnight (manual run here https://console.cloud.google.com/cloudscheduler)
-exports.updatePrompt = onSchedule("every day 00:00", async (event) => {
+exports.updatePrompt = onSchedule("every day 00:00", async () => { // event as argument?
   const response = await fetch(url);
   const document = await response.text();
 
