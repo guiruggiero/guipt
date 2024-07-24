@@ -24,5 +24,5 @@ const contentText = htmlToText(contentHTML, {
     wordwrap: null,
 });
 // console.log(contentText);
-const contentTextClean = contentText.replace(/\n{2,}/g, '\n');
+const contentTextClean = contentText.replace(/\n{2,}/g, "\n");
 console.log(contentTextClean);
