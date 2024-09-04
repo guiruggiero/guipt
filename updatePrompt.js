@@ -20,20 +20,31 @@ const contentText = htmlToText(contentHTML, {
 const newPrompt = contentText.replace(/\n{2,}/g, "\n");
 
 const oldPrompt = fs.readFileSync("functions/prompt.txt", "utf8");
-// console.log(oldPrompt.length);
-// console.log(newPrompt.length);
+// // console.log(oldPrompt.length);
+// // console.log(newPrompt.length);
 
-// If new version is bigger (proxy for updated), save to file
-if (newPrompt.length > oldPrompt.length) {
-    fs.writeFileSync("functions/prompt.txt", newPrompt, "utf-8", (error) => {
-        if (error) {
-            console.log(error);
-            return;
-        }
-    });
+fs.writeFileSync("functions/prompt.txt", newPrompt, "utf-8", (error) => {
+    if (error) {
+        console.log(error);
+        return;
+    }
+});
 
-    console.log("Prompt updated: " + (newPrompt.length - oldPrompt.length) + " characters bigger.");
-}
-else {
-    console.log("Prompt doesn't need an update.");
-}
+console.log("Prompt updated! Character diff: " + (newPrompt.length - oldPrompt.length));
+
+// --
+
+// // If new version is bigger (proxy for updated), save to file
+// if (newPrompt.length > oldPrompt.length) {
+//     fs.writeFileSync("functions/prompt.txt", newPrompt, "utf-8", (error) => {
+//         if (error) {
+//             console.log(error);
+//             return;
+//         }
+//     });
+
+//     console.log("Prompt updated: " + (newPrompt.length - oldPrompt.length) + " characters bigger.");
+// }
+// else {
+//     console.log("Prompt doesn't need an update.");
+// }
