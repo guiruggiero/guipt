@@ -7,7 +7,7 @@ const {onRequest} = require("firebase-functions/v2/https");
 const apiKey = process.env.GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(apiKey);
 
-// Gemini variation - "gemini-1.5-flash", "gemini-1.5-pro", "gemini-1.0-pro"
+// Gemini variation - https://ai.google.dev/gemini-api/docs/models/gemini
 const modelChosen = "gemini-1.5-flash";
 
 // Get prompt instructions from file
