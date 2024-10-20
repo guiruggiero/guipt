@@ -1,5 +1,7 @@
-const {GoogleGenerativeAI, HarmCategory, HarmBlockThreshold} =
-  require("@google/generative-ai");
+/* eslint-disable max-len */
+/* eslint-disable require-jsdoc */
+
+const {GoogleGenerativeAI, HarmCategory, HarmBlockThreshold} = require("@google/generative-ai");
 const fs = require("fs");
 const {onRequest} = require("firebase-functions/v2/https");
 
@@ -12,11 +14,10 @@ const modelChosen = "gemini-1.5-flash";
 
 // Get prompt instructions from file
 const instructions = fs.readFileSync("prompt.txt", "utf8");
-// console.log(instructions);
 
 // Model configuration
 const generationConfig = {
-  temperature: 0.7, // default 1
+  temperature: 0.6, // default 1
   topP: 0.95, // default 0.95
   topK: 40, // default 40
   maxOutputTokens: 400,
@@ -51,28 +52,58 @@ const model = genAI.getGenerativeModel({
   safetySettings,
 });
 
-exports.guipt = onRequest({cors: true}, async (request, response) => {
-  // Get chat history from request
-  let chatHistory = request.query.history;
-  if (!chatHistory) {
-    chatHistory = [];
+// Sanitize potentially harmful characters
+function sanitizeInput(input) {
+  input = input.replace(/<[^>]+>/g, ""); // Remove HTML tags
+  input = input.replace(/[\s\t\r\n]+/g, " "); // Normalize whitespace
+  input = input.trim(); // Remove whitespace from both ends
+
+  return input;
+}
+
+// Assess guardrails
+function validateInput(input) {
+  // Length limit
+  if (input.length > 200) {
+    return "⚠️ Oops! Your message is too long, please make it shorter.";
   }
-  // console.log("chatHistory: " + chatHistory);
 
-  // Initialize the chat
-  const chat = model.startChat({history: chatHistory});
+  // Character set - allow only alphanumeric (including accented), spaces, and basic punctuation
+  if (!/^[A-Za-zÀ-ÖØ-öø-ÿ0-9\s.,!?;:'’"()-]+$/.test(input)) { // @$%&/+
+    return "⚠️ Oops! Please use only letters, numbers, and common punctuation.";
+  }
 
+  return "OK";
+}
+
+exports.guipt = onRequest({cors: true}, async (request, response) => {
   // Get user prompt from request
   let userInput = request.query.prompt;
-  if (!userInput) {
-    userInput = "Hi, what can you do?";
+  if (!userInput || userInput == " ") {
+    userInput = "Hi! Briefly, who are you and what can you do?";
   }
 
-  // Gemini API call
-  const result = await chat.sendMessage(userInput);
-  const guiptResponse = await result.response;
-  const guiptResponseText = guiptResponse.text();
+  // Sanitize and validate input
+  const sanitizedInput = sanitizeInput(userInput);
+  const validationResult = validateInput(sanitizedInput);
 
-  // Returns model response back to API caller
-  response.send(guiptResponseText);
+  if (validationResult == "OK") {
+    // Get chat history from request
+    let chatHistory = request.query.history;
+    if (!chatHistory) {
+      chatHistory = [];
+    }
+
+    // Initialize the chat
+    const chat = model.startChat({history: chatHistory});
+
+    // Gemini API call
+    const result = await chat.sendMessage(sanitizedInput);
+    const guiptResponse = result.response.text();
+
+    // Returns model response back to API caller
+    response.send(guiptResponse);
+  } else {
+    response.send(validationResult);
+  }
 });
