@@ -21,7 +21,7 @@ let instructions = fs.readFileSync("../functions/prompt.txt", "utf8");
 
 const generationConfig = {
   temperature: 0.7, // default 1
-  topP: 0.95,
+  topP: 0.95, // default 0.95
   topK: 40, // default 40
   maxOutputTokens: 400,
   responseMimeType: "text/plain",
@@ -42,7 +42,7 @@ const safetySettings = [
   },
   {
     category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
-    threshold: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
+    threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
   },
 ];
 
@@ -56,7 +56,7 @@ const model = genAI.getGenerativeModel({
 // Simple text generation
 // async function textInput() {
 //   const result = await model.generateContent("What can you do?");
-//   const response = await result.response;
+//   const response = result.response;
 //   const text = response.text();
 //   console.log(text);
 // }
@@ -73,9 +73,14 @@ async function multiTurn() {
 
   while (input != "quit") {
     const result = await chat.sendMessage(input);
-    const response = await result.response;
+    const response = result.response;
     const text = response.text();
     console.log("GuiPT: " + text);
+
+    // console.log(response.promptFeedback);
+    // console.log(response.promptFeedback.blockReason);
+    // console.log(response.promptFeedback.safetyRatings);
+    // console.log(response.safetyRatings);
     
     input = promptUser("User: ");
   }

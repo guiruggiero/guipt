@@ -1,5 +1,6 @@
-const {GoogleGenerativeAI, HarmCategory, HarmBlockThreshold} =
-  require("@google/generative-ai");
+/* eslint-disable max-len */
+
+const {GoogleGenerativeAI, HarmCategory, HarmBlockThreshold} = require("@google/generative-ai");
 const fs = require("fs");
 const {onRequest} = require("firebase-functions/v2/https");
 
@@ -65,12 +66,12 @@ exports.whoguini = onRequest({cors: true}, async (request, response) => {
   // Get user prompt from request
   let userInput = request.query.prompt;
   if (!userInput) {
-    userInput = "Hi, what can you do?";
+    userInput = "Who are you and what can you do?";
   }
 
   // Gemini API call
   const result = await chat.sendMessage(userInput);
-  const whoguiniResponse = await result.response;
+  const whoguiniResponse = result.response;
   const whoguiniResponseText = whoguiniResponse.text();
 
   // Returns model response back to API caller
