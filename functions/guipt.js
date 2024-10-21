@@ -10,7 +10,7 @@ const apiKey = process.env.GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(apiKey);
 
 // Gemini variation - https://ai.google.dev/gemini-api/docs/models/gemini
-const modelChosen = "gemini-1.5-flash";
+const modelChosen = "gemini-1.5-flash-latest"; // gemini-1.5-flash-8b-latest
 
 // Get prompt instructions from file
 const instructions = fs.readFileSync("prompt.txt", "utf8");
