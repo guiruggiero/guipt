@@ -1,4 +1,4 @@
-import { GEMINI_API_KEY } from "../../secrets/guiruggiero.mjs";
+import { GEMINI_API_KEY } from "../../secrets/guipt.mjs";
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
 
 import fs from "fs";

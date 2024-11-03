@@ -1,5 +1,5 @@
 import axios from "axios";
-import {cloudFunctionURL} from "../../secrets/guiruggiero.mjs";
+import {cloudFunctionURL} from "../../secrets/guipt.mjs";
 
 const chatHistory = [];
 // const input = "What is Gui's email?";

@@ -1,6 +1,6 @@
 import prompt from "prompt-sync";
 import axios from "axios";
-import {cloudFunctionURL} from "../secrets/guiruggiero.mjs";
+import {cloudFunctionURL} from "../secrets/guipt.mjs";
 // console.log(cloudFunctionURL);
 
 // Initializations
