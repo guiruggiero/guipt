@@ -17,7 +17,7 @@ const instructions = fs.readFileSync("prompt.txt", "utf8");
 
 // Model configuration
 const generationConfig = {
-  temperature: 0.6, // default 1
+  temperature: 0.4, // default 1
   topP: 0.95, // default 0.95
   topK: 40, // default 40
   maxOutputTokens: 400,
