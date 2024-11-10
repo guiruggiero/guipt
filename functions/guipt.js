@@ -3,6 +3,7 @@
 
 const {GoogleGenerativeAI, HarmCategory, HarmBlockThreshold} = require("@google/generative-ai");
 const fs = require("fs");
+const sanitizeHtml = require("sanitize-html");
 const {onRequest} = require("firebase-functions/v2/https");
 
 // Initializations
@@ -12,7 +13,7 @@ const genAI = new GoogleGenerativeAI(apiKey);
 // Gemini variation - https://ai.google.dev/gemini-api/docs/models/gemini
 const modelChosen = "gemini-1.5-flash-latest"; // gemini-1.5-flash-8b-latest
 
-// Get prompt instructions from file
+// Get system instructions from file
 const instructions = fs.readFileSync("prompt.txt", "utf8");
 
 // Model configuration
@@ -54,9 +55,12 @@ const model = genAI.getGenerativeModel({
 
 // Sanitize potentially harmful characters
 function sanitizeInput(input) {
-  input = input.replace(/<[^>]+>/g, ""); // Remove HTML tags
   input = input.replace(/[\s\t\r\n]+/g, " "); // Normalize whitespace
   input = input.trim(); // Remove whitespace from both ends
+  input = sanitizeHtml(input, { // Remove HTML tags and attributes
+    allowedTags: [],
+    allowedAttributes: {},
+  });
 
   return input;
 }
@@ -68,8 +72,8 @@ function validateInput(input) {
     return "⚠️ Oops! Your message is too long, please make it shorter.";
   }
 
-  // Character set - allow only alphanumeric (including accented), spaces, and basic punctuation
-  if (!/^[A-Za-zÀ-ÖØ-öø-ÿ0-9\s.,!?;:'’"()-]+$/.test(input)) { // @$%&/+
+  // Character set
+  if (!/^[A-Za-zÀ-ÖØ-öø-ÿ0-9\s.,!?;:'’"()-]+$/.test(input)) { // Excludes @$%&/+
     return "⚠️ Oops! Please use only letters, numbers, and common punctuation.";
   }
 
