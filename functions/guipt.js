@@ -11,7 +11,7 @@ const apiKey = process.env.GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(apiKey);
 
 // Gemini variation - https://ai.google.dev/gemini-api/docs/models/gemini
-const modelChosen = "gemini-1.5-flash-latest"; // gemini-1.5-flash-8b-latest
+const chosenModel = "gemini-1.5-flash-latest"; // gemini-1.5-flash-8b-latest
 
 // Get system instructions from file
 const instructions = fs.readFileSync("prompt.txt", "utf8");
@@ -47,7 +47,7 @@ const safetySettings = [
 
 // Model constructor
 const model = genAI.getGenerativeModel({
-  model: modelChosen,
+  model: chosenModel,
   systemInstruction: instructions,
   generationConfig,
   safetySettings,
@@ -55,14 +55,14 @@ const model = genAI.getGenerativeModel({
 
 // Sanitize potentially harmful characters
 function sanitizeInput(input) {
-  input = input.replace(/[\s\t\r\n]+/g, " "); // Normalize whitespace
-  input = input.trim(); // Remove whitespace from both ends
-  input = sanitizeHtml(input, { // Remove HTML tags and attributes
+  let sanitizedInput = input.replace(/[\s\t\r\n]+/g, " "); // Normalize whitespace
+  sanitizedInput = sanitizedInput.trim(); // Remove whitespace from both ends
+  sanitizedInput = sanitizeHtml(sanitizedInput, { // Remove HTML tags and attributes
     allowedTags: [],
     allowedAttributes: {},
   });
 
-  return input;
+  return sanitizedInput;
 }
 
 // Assess guardrails
