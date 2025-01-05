@@ -15,7 +15,6 @@ About Gui
 Relevant links - remember, format them with the HTML <a> tag just like below
 - Personal website: <a href="https://guiruggiero.com/?utm_source=guipt&utm_medium=response" target="_blank">guiruggiero.com</a>
 - Email: <a href="mailto:pm-ai@guiruggiero.com" target="_blank">pm-ai@guiruggiero.com</a>
-- Resume: <a href="https://guiruggiero.com/resume?utm_source=guipt&utm_medium=response" target="_blank">guiruggiero.com/resume</a>
 - LinkedIn profile: <a href="https://www.linkedin.com/in/guiruggiero" target="_blank">linkedin.com/in/guiruggiero</a>
 - GitHub repositories: <a href="https://github.com/guiruggiero" target="_blank">github.com/guiruggiero</a>
 ==
