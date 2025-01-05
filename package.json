@@ -2,7 +2,7 @@
   "type": "module",
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
-    "axios": "^1.7.4",
+    "axios": "^1.7.9",
     "html-to-text": "^9.0.5",
     "jsdom": "^25.0.1",
     "prompt-sync": "^4.2.0"
