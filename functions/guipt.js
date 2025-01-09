@@ -1,6 +1,3 @@
-/* eslint-disable max-len */
-/* eslint-disable require-jsdoc */
-
 const {GoogleGenerativeAI, HarmCategory, HarmBlockThreshold} = require("@google/generative-ai");
 const fs = require("fs");
 const sanitizeHtml = require("sanitize-html");
