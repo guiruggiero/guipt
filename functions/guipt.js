@@ -66,12 +66,12 @@ function sanitizeInput(input) {
 function validateInput(input) {
   // Length limit
   if (input.length > 200) {
-    return "⚠️ Oops! Your message is too long, please make it shorter.";
+    return "⚠️ Would you mind shortening your message a bit, please?";
   }
 
   // Character set
   if (!/^[A-Za-zÀ-ÖØ-öø-ÿ0-9\s.,!?;:'’"()-]+$/.test(input)) { // Excludes @$%&/+
-    return "⚠️ Oops! Please use only letters, numbers, and common punctuation.";
+    return "⚠️ Please use only letters, numbers, and common punctuation.";
   }
 
   return "OK";
