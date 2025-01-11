@@ -77,7 +77,7 @@ function validateInput(input) {
   return "OK";
 }
 
-exports.guipt = onRequest({cors: true}, async (request, response) => {
+exports.guipt = onRequest({cors: true, timeoutSeconds: 33}, async (request, response) => {
   // Get user prompt from request
   let userInput = request.query.prompt;
   if (!userInput || userInput == " ") {
