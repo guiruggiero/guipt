@@ -58,21 +58,16 @@ function sanitizeInput(input) {
     allowedTags: [],
     allowedAttributes: {},
   });
-
   return sanitizedInput;
 }
 
 // Assess guardrails
 function validateInput(input) {
   // Length limit
-  if (input.length > 200) {
-    return "⚠️ Would you mind shortening your message a bit, please?";
-  }
+  if (input.length > 200) return "⚠️ Would you mind shortening your message a bit, please?";
 
-  // Character set
-  if (!/^[A-Za-zÀ-ÖØ-öø-ÿ0-9\s.,!?;:'’"()-]+$/.test(input)) { // Excludes @$%&/+
-    return "⚠️ Please use only letters, numbers, and common punctuation.";
-  }
+  // Character set - excludes @$%&/+
+  if (!/^[A-Za-zÀ-ÖØ-öø-ÿ0-9\s.,!?;:'’"()-]+$/.test(input)) return "⚠️ Please use only letters, numbers, and common punctuation.";
 
   return "OK";
 }
@@ -80,31 +75,32 @@ function validateInput(input) {
 exports.guipt = onRequest({cors: true, timeoutSeconds: 20}, async (request, response) => {
   // Get user prompt from request
   let userInput = request.query.prompt;
-  if (!userInput || userInput == " ") {
-    userInput = "Hi! Briefly, who are you and what can you do?";
-  }
+  if (!userInput || userInput == " ") userInput = "Hi! Briefly, who are you and what can you do?";
 
   // Sanitize and validate input
   const sanitizedInput = sanitizeInput(userInput);
   const validationResult = validateInput(sanitizedInput);
 
-  if (validationResult == "OK") {
-    // Get chat history from request
-    let chatHistory = request.query.history;
-    if (!chatHistory) {
-      chatHistory = [];
-    }
+  // Return error message if input doesn't pass validation
+  if (validationResult !== "OK") {
+    response.send(validationResult);
+    return;
+  }
 
-    // Initialize the chat
-    const chat = model.startChat({history: chatHistory});
+  // Get chat history and initialize chat
+  let chatHistory = request.query.history;
+  if (!chatHistory) chatHistory = [];
+  const chat = model.startChat({history: chatHistory});
 
-    // Gemini API call
+  try{
+    // Gemini API call and response back
     const result = await chat.sendMessage(sanitizedInput);
     const guiptResponse = result.response.text();
-
-    // Returns model response back to API caller
     response.send(guiptResponse);
-  } else {
-    response.send(validationResult);
+  
+  } catch (error) {
+    if (error.name == "GoogleGenerativeAIError") console.error(`Gemini API - ${error.message}:`, error);
+    else console.error(error);
+    throw error;
   }
 });
