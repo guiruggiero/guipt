@@ -7,3 +7,11 @@ updates:
       - "/functions"
     schedule:
       interval: "weekly"
+      day: "friday"
+      time: "08:00"
+      timezone: "Europe/Berlin"
+    groups:
+      version-updates:
+        applies-to: version-updates
+      security-patches:
+        applies-to: security-updates
