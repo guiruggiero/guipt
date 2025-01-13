@@ -4,7 +4,7 @@
     "@google/generative-ai": "^0.21.0",
     "axios": "^1.7.9",
     "html-to-text": "^9.0.5",
-    "jsdom": "^25.0.1",
+    "jsdom": "^26.0.0",
     "prompt-sync": "^4.2.0"
   },
   "devDependencies": {
