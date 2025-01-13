@@ -11,7 +11,15 @@ updates:
       time: "08:00"
       timezone: "Europe/Berlin"
     groups:
-      version-updates:
+      new-versions:
         applies-to: version-updates
+        update-types:
+          - "patch"
+          - "minor"
+          - "major"
       security-patches:
         applies-to: security-updates
+        update-types:
+          - "patch"
+          - "minor"
+          - "major"
