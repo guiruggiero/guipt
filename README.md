@@ -18,7 +18,7 @@ Built by [Gui Ruggiero](https://guiruggiero.com/?utm_source=github&utm_medium=gu
 - Firebase CLI
 - Gemini API key
 
-### 📦 Required dependencies
+### 📦 Dependencies
 
 - `@google/generative-ai` - Gemini API integration
 - `firebase-admin` & `firebase-functions` - Cloud Functions backend
