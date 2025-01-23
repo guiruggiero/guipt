@@ -1,4 +1,4 @@
-# 🧠 GuiPT API
+# 🧠 GuiPT endpoint
 
 A specialized chatbot built with Google's Gemini API to answer questions about Gui Ruggiero. The bot runs on Firebase Cloud Functions and features safety measures to ensure safety.
 
