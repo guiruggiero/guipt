@@ -9,13 +9,14 @@ Built by [Gui Ruggiero](https://guiruggiero.com/?utm_source=github&utm_medium=gu
 - Gemini 1.5 Flash integration for fast, context-aware responses with multi-language support
 - Configurable safety settings and generation parameters
 - User input sanitization and validation for secure responses
+- CORS-enabled for web integration
 - Automated prompt updates from external source
 
 ### 🛠️ Prerequisites
 
 - Node.js 22.x
 - Firebase CLI
-- Google Cloud Platform account
+- Gemini API key
 
 ### 📦 Required dependencies
 
