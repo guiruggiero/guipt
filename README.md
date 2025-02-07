@@ -1,36 +1,37 @@
 # 🧠 GuiPT endpoint
 
-A specialized chatbot built with Google's Gemini API to answer questions about Gui Ruggiero. The bot runs on Firebase Cloud Functions and features safety measures to ensure safety.
+A chatbot built to answer questions about Gui Ruggiero using Google Gemini API on a Firebase Cloud Function.
 
 Built by [Gui Ruggiero](https://guiruggiero.com/?utm_source=github&utm_medium=guipt).
 
 ### ✨ Features
 
-- Gemini 1.5 Flash integration for fast, context-aware responses with multi-language support
-- Configurable safety settings and generation parameters
-- User input sanitization and validation for secure responses
-- CORS-enabled for web integration
-- Automated prompt updates from external source
+- Gemini Flash model through Gemini API integration for fast responses with multi-language support
+- User input sanitization and validation with custom error messages for security
+- CORS-enabled for website integration
+- System instruction with long context and easter eggs
+- Automated system instruction updates from Google Docs
 
 ### 🛠️ Prerequisites
 
-- Node.js 22.x
+- Node.js
 - Firebase CLI
 - Gemini API key
 
 ### 📦 Dependencies
 
 - `@google/generative-ai` - Gemini API integration
-- `firebase-admin` & `firebase-functions` - Cloud Functions backend
-- `sanitize-html` - input security
-- `jsdom` & `html-to-text` - prompt processing
+- `firebase-admin` & `firebase-functions` - Firebase Cloud Functions backend
+- `sanitize-html` - input sanitization
+- `eslint` - code linting
+- `jsdom` & `html-to-text` - system instruction update
 
 ---
 
-### 📄 License
+#### 📄 License
 
 This project is licensed under the [MIT License](LICENSE). Attribution is required.
 
-### ⚠️ Disclaimer
+#### ⚠️ Disclaimer
 
-This software is provided "as is" without any warranties. Use at your own risk. The author is not responsible for any consequences of using this software. Please use it responsibly and ensure you comply with all relevant terms of service and regulations.
+This software is provided "as is" without any warranties. Use at your own risk. The author is not responsible for any consequences of using this software.
