@@ -2,8 +2,6 @@
 
 A custom AI assistant API built to answer questions about Gui Ruggiero using Google Gemini on a Firebase Cloud Function.
 
-Built by [Gui Ruggiero](https://guiruggiero.com/?utm_source=github&utm_medium=guipt).
-
 ### ✨ Features
 
 - Gemini Flash model through Gemini API integration for fast responses with multi-language support
