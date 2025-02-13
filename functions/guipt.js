@@ -1,5 +1,5 @@
-const {GoogleGenerativeAI, HarmCategory, HarmBlockThreshold} = require("@google/generative-ai");
 const fs = require("fs");
+const {HarmCategory, HarmBlockThreshold, GoogleGenerativeAI} = require("@google/generative-ai");
 const sanitizeHtml = require("sanitize-html");
 const {onRequest} = require("firebase-functions/v2/https");
 
@@ -7,11 +7,11 @@ const {onRequest} = require("firebase-functions/v2/https");
 const apiKey = process.env.GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(apiKey);
 
-// Gemini variation - https://ai.google.dev/gemini-api/docs/models/gemini
-const chosenModel = "gemini-2.0-flash-lite-preview-02-05"; // gemini-1.5-flash-latest
-
 // Get system instructions from file
 const instructions = fs.readFileSync("prompt.txt", "utf8");
+
+// Gemini variation - https://ai.google.dev/gemini-api/docs/models/gemini
+const chosenModel = "gemini-2.0-flash-lite-preview-02-05"; // gemini-1.5-flash-latest
 
 // Model configuration
 const generationConfig = {
@@ -59,7 +59,7 @@ function sanitizeInput(input) {
     allowedAttributes: {},
   });
   return sanitizedInput;
-}
+};
 
 // Assess guardrails
 function validateInput(input) {
@@ -70,7 +70,7 @@ function validateInput(input) {
   if (!/^[A-Za-zÀ-ÖØ-öø-ÿ0-9\s.,!?;:'’"()-]+$/.test(input)) return "⚠️ Please use only letters, numbers, and common punctuation.";
 
   return "OK";
-}
+};
 
 exports.guipt = onRequest({cors: true, timeoutSeconds: 20}, async (request, response) => {
   // Get user prompt from request
