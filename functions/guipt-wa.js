@@ -1,6 +1,3 @@
-// const fs = require("fs");
-// const {HarmCategory, HarmBlockThreshold, GoogleGenerativeAI} = require("@google/generative-ai");
-// const sanitizeHtml = require("sanitize-html");
 import fs from "fs";
 import {HarmCategory, HarmBlockThreshold, GoogleGenerativeAI} from "@google/generative-ai";
 import sanitizeHtml from "sanitize-html";
@@ -94,7 +91,7 @@ export async function callGuiPT(context, input) {
   const chat = model.startChat({history: chatHistory});
 
   try{
-    // Gemini API call and response back
+    // Call Gemini API and send response back
     const result = await chat.sendMessage(sanitizedInput);
     const guiptResponse = result.response.text();
     return guiptResponse;

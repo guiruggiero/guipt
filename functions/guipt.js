@@ -93,7 +93,7 @@ exports.guipt = onRequest({cors: true, timeoutSeconds: 20}, async (request, resp
   const chat = model.startChat({history: chatHistory});
 
   try{
-    // Gemini API call and response back
+    // Call Gemini API and send response back
     const result = await chat.sendMessage(sanitizedInput);
     const guiptResponse = result.response.text();
     response.send(guiptResponse);

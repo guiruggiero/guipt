@@ -1,5 +1,5 @@
 const guipt = require("./guipt");
-const whatsapp = require("./whatsapp");
+// const whatsapp = require("./whatsapp");
 
 exports.guipt = guipt.guipt;
-exports.whatsapp = whatsapp.twilio;
+// exports.whatsapp = whatsapp.twilio;
