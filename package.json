@@ -18,7 +18,7 @@
     "firebase-admin": "^13.1.0",
     "firebase-functions": "^6.3.1",
     "globals": "^15.14.0",
-    "ngrok": "^3.19.1"
+    "ngrok": "^4.3.3"
   },
   "scripts": {
     "lint": "eslint ./"
