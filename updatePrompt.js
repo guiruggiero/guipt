@@ -23,7 +23,7 @@ const oldPrompt = fs.readFileSync("functions/prompt.txt", "utf8");
 
 fs.writeFileSync("functions/prompt.txt", newPrompt, "utf-8", (error) => {
     if (error) {
-        console.log(error);
+        console.error(error);
         return;
     }
 });
