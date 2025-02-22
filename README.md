@@ -1,3 +1,6 @@
+[![CodeQL](https://github.com/guiruggiero/guipt/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/guiruggiero/guipt/actions/workflows/github-code-scanning/codeql)
+[![Dependencies](https://github.com/guiruggiero/guipt/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/guiruggiero/guipt/actions/workflows/dependabot/dependabot-updates)
+
 # 🧠 GuiPT API
 
 A custom AI assistant API built to answer questions about Gui Ruggiero using Google Gemini on a Firebase Cloud Function.
