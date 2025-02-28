@@ -3,16 +3,16 @@
   "dependencies": {
     "@google/generative-ai": "^0.22.0",
     "@google-cloud/secret-manager": "^5.6.0",
-    "axios": "^1.7.9",
+    "axios": "^1.8.1",
     "body-parser": "^1.20.3",
     "express": "^4.21.2",
     "prompt-sync": "^4.2.0",
     "twilio": "^5.4.5"
   },
   "devDependencies": {
-    "@eslint/js": "^9.20.0",
-    "eslint": "^9.20.1",
-    "firebase": "^11.3.1",
+    "@eslint/js": "^9.21.0",
+    "eslint": "^9.21.0",
+    "firebase": "^11.4.0",
     "firebase-admin": "^13.1.0",
     "firebase-functions": "^6.3.2",
     "globals": "^16.0.0",
