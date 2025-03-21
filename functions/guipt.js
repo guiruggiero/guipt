@@ -1,9 +1,14 @@
+const Sentry = require("@sentry/node");
 const fs = require("fs");
 const {HarmCategory, HarmBlockThreshold, GoogleGenerativeAI} = require("@google/generative-ai");
 const sanitizeHtml = require("sanitize-html");
 const {onRequest} = require("firebase-functions/v2/https");
 
 // Initializations
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+  tracesSampleRate: 1.0,
+});
 const apiKey = process.env.GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(apiKey);
 
@@ -11,7 +16,7 @@ const genAI = new GoogleGenerativeAI(apiKey);
 const instructions = fs.readFileSync("prompt.txt", "utf8");
 
 // Gemini variation - https://ai.google.dev/gemini-api/docs/models/gemini
-const chosenModel = "gemini-2.0-flash-lite-preview-02-05"; // gemini-1.5-flash-latest
+const chosenModel = "gemini-2.0-flash-lite";
 
 // Model configuration
 const generationConfig = {
@@ -99,8 +104,26 @@ exports.guipt = onRequest({cors: true, timeoutSeconds: 20}, async (request, resp
     response.send(guiptResponse);
   
   } catch (error) {
+    // Add contextual information to error
+    Sentry.setContext("request_details", {
+      input: userInput,
+      input_length: userInput.length,
+      sanitized_input: sanitizedInput,
+      sanitized_input_length: sanitizedInput.length,
+      validation_result: validationResult,
+      chat_history: chatHistory,
+    });
+
+    // Capture error
+    Sentry.captureException(error);
+
+    // Log error details
     if (error.name == "GoogleGenerativeAIError") console.error(`Gemini API - ${error.message}:`, error);
     else console.error(error);
+    
+    // Send error before function terminates
+    await Sentry.flush(1000);
+    
     throw error;
   }
 });
