@@ -12,16 +12,19 @@ A custom AI assistant API built to answer questions about Gui Ruggiero using Goo
 - CORS-enabled for website integration
 - System instruction with long context and easter eggs
 - Automated system instruction updates from Google Docs
+- Sentry error tracking and monitoring for debugging
 
 ### 🛠️ Prerequisites
 
 - Node.js
 - Firebase CLI
 - Gemini API key
+- Sentry DSN key
 
 ### 📦 Dependencies
 
 - `@google/generative-ai` - Gemini API integration
+- `@sentry/node` - Sentry integration
 - `firebase-admin` & `firebase-functions` - Firebase Cloud Functions backend
 - `sanitize-html` - input sanitization
 - `eslint` - code linting

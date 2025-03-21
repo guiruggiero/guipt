@@ -104,18 +104,15 @@ exports.guipt = onRequest({cors: true, timeoutSeconds: 20}, async (request, resp
     response.send(guiptResponse);
   
   } catch (error) {
-    // Add contextual information to error
-    Sentry.setContext("request_details", {
+    // Capture error with request details as extra context
+    Sentry.captureException(error, {contexts: {
       input: userInput,
       input_length: userInput.length,
       sanitized_input: sanitizedInput,
       sanitized_input_length: sanitizedInput.length,
       validation_result: validationResult,
       chat_history: chatHistory,
-    });
-
-    // Capture error
-    Sentry.captureException(error);
+    }});
 
     // Log error details
     if (error.name == "GoogleGenerativeAIError") console.error(`Gemini API - ${error.message}:`, error);
