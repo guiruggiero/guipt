@@ -17,8 +17,8 @@
     "@google/generative-ai": "^0.24.0",
     "@sentry/node": "^9.7.0",
     "firebase-functions": "^6.3.2",
-    "sanitize-html": "^2.14.0",
-    "twilio": "^5.5.0"
+    "sanitize-html": "^2.15.0",
+    "twilio": "^5.5.1"
   },
   "devDependencies": {
     "eslint": "^9.22.0",
