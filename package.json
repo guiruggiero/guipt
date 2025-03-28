@@ -4,14 +4,14 @@
     "@google/generative-ai": "^0.24.0",
     "@google-cloud/secret-manager": "^6.0.1",
     "axios": "^1.8.4",
-    "body-parser": "^1.20.3",
+    "body-parser": "^2.2.0",
     "express": "^4.21.2",
     "prompt-sync": "^4.2.0",
     "twilio": "^5.5.1"
   },
   "devDependencies": {
-    "@eslint/js": "^9.22.0",
-    "eslint": "^9.22.0",
+    "@eslint/js": "^9.23.0",
+    "eslint": "^9.23.0",
     "firebase": "^11.5.0",
     "firebase-admin": "^13.2.0",
     "firebase-functions": "^6.3.2",
