@@ -104,14 +104,14 @@ exports.guipt = onRequest({cors: true, timeoutSeconds: 20}, async (request, resp
     response.send(guiptResponse);
   
   } catch (error) {
-    // Capture error with request details as extra context
+    // Capture error with request details as context
     Sentry.captureException(error, {contexts: {
-      input: userInput,
-      input_length: userInput.length,
-      sanitized_input: sanitizedInput,
-      sanitized_input_length: sanitizedInput.length,
-      validation_result: validationResult,
-      chat_history: chatHistory,
+      userInput: userInput,
+      userInputLength: userInput.length,
+      sanitizedInput: sanitizedInput,
+      sanitizedInputLength: sanitizedInput.length,
+      validationResult: validationResult,
+      chatHistory: chatHistory,
     }});
 
     // Log error details
