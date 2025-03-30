@@ -1,7 +1,7 @@
 import express from "express";
-import {EXPRESS_PORT} from "../../secrets/guipt.mjs";
+import {EXPRESS_PORT} from "../secrets/guipt.mjs";
 import bodyParser from "body-parser";
-import {callGuiPT} from "../functions/guipt-wa.js";
+import {callGuiPT} from "./guipt-wa.js";
 import twilio from "twilio";
 const {MessagingResponse} = twilio.twiml;
 

@@ -1,4 +1,4 @@
-import {GEMINI_API_KEY} from "../../secrets/guipt.mjs"; // For tests/express.js
+import {GEMINI_API_KEY} from "../secrets/guipt.mjs"; // For tests/express.js
 import fs from "fs";
 import {HarmCategory, HarmBlockThreshold, GoogleGenerativeAI} from "@google/generative-ai";
 import sanitizeHtml from "sanitize-html";
@@ -10,7 +10,7 @@ const genAI = new GoogleGenerativeAI(apiKey);
 
 // Get system instructions from file
 // const instructions = fs.readFileSync("prompt.txt", "utf8");
-const instructions = fs.readFileSync("/home/ubuntu/guipt/functions/prompt.txt", "utf8"); // For tests/express.js
+const instructions = fs.readFileSync("/home/ubuntu/guipt/prompt.txt", "utf8"); // For tests/express.js
 
 // Gemini variation - https://ai.google.dev/gemini-api/docs/models/gemini
 const chosenModel = "gemini-2.0-flash-lite-preview-02-05"; // gemini-1.5-flash-latest

@@ -1,4 +1,4 @@
-import {PROMPT_URL} from "../../secrets/guipt.mjs";
+import {PROMPT_URL} from "../secrets/guipt.mjs";
 import jsdom from "jsdom";
 import {htmlToText} from "html-to-text";
 

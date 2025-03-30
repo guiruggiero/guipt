@@ -1,4 +1,4 @@
-import { GEMINI_API_KEY } from "../../secrets/guipt.mjs";
+import { GEMINI_API_KEY } from "../secrets/guipt.mjs";
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
 import fs from "fs";
 import prompt from "prompt-sync";
@@ -16,7 +16,7 @@ const promptUser = new prompt();
 const modelChosen = "gemini-1.5-flash";
 // const modelChosen = "gemini-1.0-pro";
 
-let instructions = fs.readFileSync("../functions/prompt.txt", "utf8");
+let instructions = fs.readFileSync("../prompt.txt", "utf8");
 // console.log(instructions);
 
 const generationConfig = {
