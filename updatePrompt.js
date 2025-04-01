@@ -22,10 +22,10 @@ const oldPrompt = fs.readFileSync("functions/prompt.txt", "utf8");
 // console.log(newPrompt.length);
 
 fs.writeFileSync("functions/prompt.txt", newPrompt, "utf-8", (error) => {
-  if (error) {
-    console.error(error);
-    return;
-  }
+    if (error) {
+        console.error(error);
+        return;
+    }
 });
 
 console.log("Prompt updated! Character diff: " + (newPrompt.length - oldPrompt.length));

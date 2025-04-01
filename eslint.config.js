@@ -10,19 +10,20 @@ export default [
   // Custom JavaScript configuration
   {
     files: ["*.js"],
+    ignores: ["eslint.config.js"],
     plugins: {
       js,
       "@stylistic/js": stylisticJs,
     },
     languageOptions: {
-      // sourceType: "module",
+      sourceType: "module",
       globals: {
         ...globals.node,
       },
     },
     rules: {
       "no-unused-vars": "error",
-      "@stylistic/js/indent": ["warn", 2],
+      "@stylistic/js/indent": ["warn", 4],
       "@stylistic/js/semi": "error",
       "@stylistic/js/no-extra-semi": "warn",
       "@stylistic/js/comma-spacing": ["warn", {"before": false, "after": true}],
