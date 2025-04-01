@@ -1,25 +1,25 @@
 version: 2
 
 updates:
-  - package-ecosystem: "npm"
+  - package-ecosystem: npm
     directories:
-      - "/"
-      - "/functions"
+      - /
+      - /functions
     schedule:
-      interval: "weekly"
-      day: "saturday"
+      interval: weekly
+      day: saturday
       time: "08:00"
-      timezone: "Europe/Berlin"
+      timezone: Europe/Berlin
     groups:
       new-versions:
         applies-to: version-updates
         update-types:
-          - "patch"
-          - "minor"
-          - "major"
+          - patch
+          - minor
+          - major
       security-patches:
         applies-to: security-updates
         update-types:
-          - "patch"
-          - "minor"
-          - "major"
+          - patch
+          - minor
+          - major
