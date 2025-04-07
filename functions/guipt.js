@@ -113,10 +113,6 @@ exports.guipt = onRequest({cors: true, timeoutSeconds: 20}, async (request, resp
       validationResult: validationResult,
       chatHistory: chatHistory,
     }});
-
-    // Log error details
-    if (error.name == "GoogleGenerativeAIError") console.error(`Gemini API - ${error.message}:`, error);
-    else console.error(error);
     
     // Send error before function terminates
     await Sentry.flush(1000);
