@@ -15,7 +15,7 @@ const genAI = new GoogleGenerativeAI(apiKey);
 // Get system instructions from file
 const instructions = fs.readFileSync("prompt.txt", "utf8");
 
-// Gemini variation - https://ai.google.dev/gemini-api/docs/models/gemini
+// Gemini variation - https://ai.google.dev/gemini-api/docs/models
 const chosenModel = "gemini-2.0-flash-lite";
 
 // Model configuration
