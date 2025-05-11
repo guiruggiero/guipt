@@ -27,7 +27,7 @@ A custom AI assistant API built to answer questions about Gui Ruggiero using Goo
 - `@sentry/node` - Sentry integration
 - `firebase-admin` & `firebase-functions` - Firebase Cloud Functions backend
 - `sanitize-html` - input sanitization
-- `eslint`, `eslint-stylistic`, and `eslint-plugin-yml` - code linting
+- `eslint` - code linting
 - `jsdom` & `html-to-text` - system instruction update
 
 ---
