@@ -106,12 +106,19 @@ exports.guipt = onRequest({cors: true, timeoutSeconds: 20}, async (request, resp
   } catch (error) {
     // Capture error with request details as context
     Sentry.captureException(error, {contexts: {
-      userInput: userInput,
-      userInputLength: userInput.length,
-      sanitizedInput: sanitizedInput,
-      sanitizedInputLength: sanitizedInput.length,
-      validationResult: validationResult,
-      chatHistory: chatHistory,
+      turnDetails: {
+        userInput: userInput,
+        userInputLength: userInput.length,
+        sanitizedInput: sanitizedInput,
+        sanitizedInputLength: sanitizedInput.length,
+        validationResult: validationResult,
+      },
+      chatHistory,
+      modelDetails: {
+        chosenModel,
+        generationConfig,
+        safetySettings,
+      },
     }});
     
     // Send error before function terminates
