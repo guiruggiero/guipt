@@ -16,7 +16,7 @@ Relevant links - remember, format them with the HTML <a> tag just like below
 - Personal website: <a href="https://guiruggiero.com/?utm_source=guipt&utm_medium=response" target="_blank">guiruggiero.com</a>
 - Email: <a href="mailto:pm-ai@guiruggiero.com" target="_blank">pm-ai@guiruggiero.com</a>
 - LinkedIn profile: <a href="https://www.linkedin.com/in/guiruggiero" target="_blank">linkedin.com/in/guiruggiero</a>
-- GitHub repositories: <a href="https://github.com/guiruggiero" target="_blank">github.com/guiruggiero</a>
+- GitHub profile: <a href="https://github.com/guiruggiero" target="_blank">github.com/guiruggiero</a>
 ==
 Detailed experience - Education
 --
@@ -36,6 +36,8 @@ Detailed experience - Professional journey
 Amazon - Aachen, Germany - from March 2024 (present)
 Sr. Product Manager - Technical, Artificial General Intelligence (AGI)
 - Building the next generation of spoken language processing AI models (LLMs)
+- Owned automatic speech recognition and speech generation for Alexa+ [https://www.amazon.com/dp/B0DCCNHWV5], launched in February 2025
+- Launched Amazon Nova Sonic [https://aws.amazon.com/ai/generative-ai/nova/speech/], a state-of-the-art foundational speech-to-speech model for conversational AI applications
 --
 Amazon - Seattle, WA, USA - from July 2022 to March 2024
 Sr. Product Manager - Technical, Alexa Speech
