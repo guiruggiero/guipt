@@ -15,6 +15,8 @@ A custom AI assistant API built to answer questions about Gui Ruggiero using Goo
 - System instruction with long context and easter eggs
 - Automated system instruction updates from Google Docs
 - Sentry error tracking and monitoring for debugging
+- Snyk vulnerability scanning
+- SonarQube for code quality and security
 
 ### 🛠️ Prerequisites
 
