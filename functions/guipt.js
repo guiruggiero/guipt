@@ -57,7 +57,7 @@ const model = genAI.getGenerativeModel({
 
 // Sanitize potentially harmful characters
 function sanitizeInput(input) {
-  let sanitizedInput = input.replace(/[\s\t\r\n]+/g, " "); // Normalize whitespace
+  let sanitizedInput = input.replace(/\s+/g, " "); // Normalize whitespace
   sanitizedInput = sanitizedInput.trim(); // Remove whitespace from both ends
   sanitizedInput = sanitizeHtml(sanitizedInput, { // Remove HTML tags and attributes
     allowedTags: [],
