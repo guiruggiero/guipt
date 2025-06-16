@@ -27,7 +27,7 @@ A custom AI assistant API built to answer questions about Gui Ruggiero using Goo
 
 ### 📦 Dependencies
 
-- `@google/generative-ai` - Gemini API integration
+- `@google/genai` - Gemini API integration
 - `@sentry/node` - Sentry integration
 - `firebase-admin` & `firebase-functions` - Firebase Cloud Functions backend
 - `sanitize-html` - input sanitization
