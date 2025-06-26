@@ -25,13 +25,16 @@ const safetySettings = [
 
 // Model configuration
 const modelConfig = {
-  model: "gemini-2.0-flash-lite",
+  model: "gemini-2.5-flash-lite-preview-06-17",
   config: {
     systemInstruction: instructions,
     temperature: 0.4,
     maxOutputTokens: 400,
     responseMimeType: "text/plain",
     safetySettings: safetySettings,
+    thinkingconfig: {
+      thinkingbudget: 0,
+    },
   },
 };
 
