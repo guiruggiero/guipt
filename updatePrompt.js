@@ -1,8 +1,10 @@
+// Imports
 import {PROMPT_URL} from "../secrets/guipt.mjs";
 import jsdom from "jsdom";
 import {htmlToText} from "html-to-text";
 import fs from "fs";
 
+// Initialization
 const url = PROMPT_URL;
 
 // Gets source from page
@@ -17,10 +19,12 @@ const contentHTML = dom.window.document.querySelectorAll("div.doc-content")[0].i
 const contentText = htmlToText(contentHTML, {wordwrap: null});
 const newPrompt = contentText.replace(/\n{2,}/g, "\n");
 
+// Gets old prompt
 const oldPrompt = fs.readFileSync("functions/prompt.txt", "utf8");
 // console.log(oldPrompt.length);
 // console.log(newPrompt.length);
 
+// Updates prompt
 fs.writeFileSync("functions/prompt.txt", newPrompt, "utf-8", (error) => {
     if (error) {
         console.error(error);
@@ -28,4 +32,5 @@ fs.writeFileSync("functions/prompt.txt", newPrompt, "utf-8", (error) => {
     }
 });
 
+// Logs update
 console.log("Prompt updated! Character diff: " + (newPrompt.length - oldPrompt.length));

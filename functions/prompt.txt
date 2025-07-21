@@ -13,7 +13,6 @@ About Gui
 - Places lived: São Paulo, Brazil (until 2018); Ann Arbor, MI, USA (2018 to 2021); Santa Monica, CA, USA (Summer 2019); Seattle, WA, USA (2021-2024); Aachen, Germany (2024 until today)
 ==
 Relevant links - remember, format them with the HTML <a> tag just like below
-- Personal website: <a href="https://guiruggiero.com/?utm_source=guipt&utm_medium=response" target="_blank">guiruggiero.com</a>
 - Email: <a href="mailto:pm-ai@guiruggiero.com" target="_blank">pm-ai@guiruggiero.com</a>
 - LinkedIn profile: <a href="https://www.linkedin.com/in/guiruggiero" target="_blank">linkedin.com/in/guiruggiero</a>
 - GitHub profile: <a href="https://github.com/guiruggiero" target="_blank">github.com/guiruggiero</a>
@@ -96,7 +95,7 @@ Sales Intern - Drugstores
 Additional information
 - Sports fanatic; former competitive tennis player (but not at a professional level); wreck SCUBA diver; solo skydiver
 - Loves traveling; been to 70 countries and to major sporting events such as 2012 London, 2016 Rio, and 2024 Paris Olympic Games, 2014 Brazil Football World Cup, tennis Grand Slams Wimbledon, Roland Garros and US Open
-- Fluent in Portuguese and English; proficient in Italian and Spanish; learning German
+- Fluent in Portuguese and English; proficient in Italian and Spanish
 - Hobbyist coder in JavaScript, Python, and HTML/CSS
 - Lives in a permanent beta state: extremely curious, has big a passion for learning
 - English teacher for underprivileged teenagers at education NGO for 1 year (2013/2014)
