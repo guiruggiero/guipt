@@ -1,13 +1,10 @@
 {
   "name": "functions",
   "description": "Cloud Functions for Firebase",
-  "scripts": {
-    "lint": "eslint .",
-    "deploy": "npx firebase deploy --only functions"
-  },
   "engines": {
     "node": "22"
   },
+  "private": true,
   "main": "index.js",
   "dependencies": {
     "@google/genai": "^1.13.0",
@@ -20,5 +17,8 @@
     "eslint-config-google": "^0.14.0",
     "firebase-tools": "^14.12.1"
   },
-  "private": true
+  "scripts": {
+    "lint": "eslint .",
+    "deploy": "npx firebase deploy --only functions"
+  }
 }

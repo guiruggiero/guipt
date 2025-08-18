@@ -1,4 +1,8 @@
 {
+  "name": "guipt",
+	"author": "Gui Ruggiero",
+	"homepage": "https://guiruggiero.com/",
+	"version": "1.0",
   "type": "module",
   "dependencies": {
     "html-to-text": "^9.0.5",
