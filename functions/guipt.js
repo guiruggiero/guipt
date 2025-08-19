@@ -60,7 +60,14 @@ function validateInput(input) {
   return "OK";
 };
 
-exports.guipt = onRequest({cors: true, timeoutSeconds: 20}, async (request, response) => {
+// Function configuration
+const functionConfig = {
+  cors: true,
+  maxInstances: 5,
+  timeoutSeconds: 20,
+};
+
+exports.guipt = onRequest(functionConfig, async (request, response) => {
   // Get user prompt from request
   let userInput = request.query.prompt;
   if (!userInput || userInput == " ") userInput = "Hi! Briefly, who are you and what can you do?";
@@ -115,7 +122,7 @@ exports.guipt = onRequest({cors: true, timeoutSeconds: 20}, async (request, resp
     }});
     
     // Send error before function terminates
-    await Sentry.flush(1000);
+    await Sentry.flush(2000);
     
     throw error;
   }
