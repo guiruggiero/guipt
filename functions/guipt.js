@@ -25,7 +25,7 @@ const safetySettings = [
 
 // Model configuration
 const modelConfig = {
-  model: "gemini-2.5-flash-lite-preview-06-17",
+  model: "gemini-2.5-flash-lite",
   config: {
     systemInstruction: instructions,
     temperature: 0.4,
@@ -100,6 +100,7 @@ exports.guipt = onRequest(functionConfig, async (request, response) => {
     const result = await chat.sendMessage({message: sanitizedInput});
     const guiptResponse = result.text;
     response.send(guiptResponse);
+    return;
   
   } catch (error) {
     // Capture error with request details as context
