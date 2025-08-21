@@ -9,7 +9,7 @@ A custom AI assistant API built to answer questions about Gui Ruggiero using Goo
 
 ### ✨ Features
 
-- Gemini Flash model through Gemini API integration for fast responses with multi-language support
+- Gemini Flash Lite model through Gemini API integration for fast responses with multi-language support
 - User input sanitization and validation with custom error messages for security
 - CORS-enabled for website integration
 - System instruction with long context and easter eggs
