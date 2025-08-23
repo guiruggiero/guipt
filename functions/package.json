@@ -13,9 +13,9 @@
     "sanitize-html": "^2.16.0"
   },
   "devDependencies": {
-    "eslint": "^9.33.0",
+    "eslint": "^9.34.0",
     "eslint-config-google": "^0.14.0",
-    "firebase-tools": "^14.12.1"
+    "firebase-tools": "^14.14.0"
   },
   "scripts": {
     "lint": "eslint .",
