@@ -8,6 +8,7 @@ const {onRequest} = require("firebase-functions/v2/https");
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
   tracesSampleRate: 1.0,
+  enableLogs: true,
 });
 const apiKey = process.env.GEMINI_API_KEY;
 const ai = new GoogleGenAI({apiKey: apiKey});
@@ -68,9 +69,11 @@ const functionConfig = {
 };
 
 exports.guipt = onRequest(functionConfig, async (request, response) => {
+  Sentry.logger.info("GuiPT started");
+
   // Get user prompt from request
   let userInput = request.query.prompt;
-  if (!userInput || userInput == " ") userInput = "Hi! Briefly, who are you and what can you do?";
+  if (!userInput || userInput == " ") userInput = "Hi! Briefly, who are you and what can you do?"; // TODO: auth
 
   // Sanitize and validate input
   const sanitizedInput = sanitizeInput(userInput);
@@ -78,6 +81,9 @@ exports.guipt = onRequest(functionConfig, async (request, response) => {
 
   // Return error message if input doesn't pass validation
   if (validationResult !== "OK") {
+    Sentry.logger.warn("Validation failed", {validationResult});
+    await Sentry.flush(2000);
+
     response.send(validationResult);
     return;
   }
@@ -95,10 +101,13 @@ exports.guipt = onRequest(functionConfig, async (request, response) => {
   // Initialize chat
   const chat = ai.chats.create(chatConfigWithHistory);
 
+  Sentry.logger.info("Ready for Gemini call");
+
   try{
     // Call Gemini API and send response back
     const result = await chat.sendMessage({message: sanitizedInput});
     const guiptResponse = result.text;
+    Sentry.logger.info("GuiPT done");
     response.send(guiptResponse);
     return;
   
@@ -121,8 +130,6 @@ exports.guipt = onRequest(functionConfig, async (request, response) => {
         safetySettings: modelConfig.config.safetySettings,
       },
     }});
-    
-    // Send error before function terminates
     await Sentry.flush(2000);
     
     throw error;
