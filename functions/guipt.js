@@ -1,10 +1,14 @@
+// Imports
+// const {initializeApp} = require("firebase-admin/app"); // TODO
 const Sentry = require("@sentry/node");
 const fs = require("fs");
 const {GoogleGenAI} = require("@google/genai");
 const sanitizeHtml = require("sanitize-html");
 const {onRequest} = require("firebase-functions/v2/https");
+// const {getAppCheck} = require("firebase-admin/app-check"); // TODO
 
 // Initializations
+// initializeApp(); // TODO
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
   tracesSampleRate: 1.0,
@@ -65,15 +69,35 @@ function validateInput(input) {
 const functionConfig = {
   cors: true,
   maxInstances: 5,
-  timeoutSeconds: 20,
+  timeoutSeconds: 4,
 };
 
 exports.guipt = onRequest(functionConfig, async (request, response) => {
   Sentry.logger.info("GuiPT started");
 
+  // App Check verification // TODO
+  // const appCheckToken = request.headers["X-Firebase-AppCheck"];
+  // try {
+  //   await getAppCheck().verifyToken(appCheckToken);
+  // } catch (error) {
+  //   let message = "";
+  //   if (!appCheckToken) message = "Token not present";
+  //   else message = "Unverified token";
+  //   Sentry.logger.warn("Request not authenticated", {
+  //     message: message,
+  //     appCheckToken: appCheckToken,
+  //     requestQuery: request.query,
+  //     error: error.message,
+  //   });
+  //   await Sentry.flush(2000);
+
+  //   response.status(401).send("Request not authenticated");
+  //   return;
+  // }
+
   // Get user prompt from request
   let userInput = request.query.prompt;
-  if (!userInput || userInput == " ") userInput = "Hi! Briefly, who are you and what can you do?"; // TODO: auth
+  if (!userInput || userInput == " ") userInput = "Hi! Briefly, who are you and what can you do?";
 
   // Sanitize and validate input
   const sanitizedInput = sanitizeInput(userInput);
@@ -101,14 +125,14 @@ exports.guipt = onRequest(functionConfig, async (request, response) => {
   // Initialize chat
   const chat = ai.chats.create(chatConfigWithHistory);
 
-  Sentry.logger.info("Ready for Gemini call");
+  Sentry.logger.info("Ready for Gemini call", {sanitizedInput});
 
   try{
     // Call Gemini API and send response back
     const result = await chat.sendMessage({message: sanitizedInput});
     const guiptResponse = result.text;
-    Sentry.logger.info("GuiPT done");
-    response.send(guiptResponse);
+    Sentry.logger.info("GuiPT done", {guiptResponse});
+    response.status(200).send(guiptResponse);
     return;
   
   } catch (error) {
