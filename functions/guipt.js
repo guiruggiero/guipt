@@ -1,14 +1,14 @@
 // Imports
-// const {initializeApp} = require("firebase-admin/app"); // TODO
+// const {initializeApp} = require("firebase-admin/app"); // App Check
 const Sentry = require("@sentry/node");
-const fs = require("fs");
 const {GoogleGenAI} = require("@google/genai");
+const fs = require("fs");
 const sanitizeHtml = require("sanitize-html");
 const {onRequest} = require("firebase-functions/v2/https");
-// const {getAppCheck} = require("firebase-admin/app-check"); // TODO
+// const {getAppCheck} = require("firebase-admin/app-check"); // App Check
 
 // Initializations
-// initializeApp(); // TODO
+// initializeApp(); // App Check
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
   tracesSampleRate: 1.0,
@@ -75,7 +75,7 @@ const functionConfig = {
 exports.guipt = onRequest(functionConfig, async (request, response) => {
   Sentry.logger.info("GuiPT started");
 
-  // App Check verification // TODO
+  // App Check verification // App Check
   // const appCheckToken = request.headers["X-Firebase-AppCheck"];
   // try {
   //   await getAppCheck().verifyToken(appCheckToken);
