@@ -1,14 +1,11 @@
 // Imports
-// const {initializeApp} = require("firebase-admin/app"); // App Check
 const Sentry = require("@sentry/node");
 const {GoogleGenAI} = require("@google/genai");
 const fs = require("fs");
 const sanitizeHtml = require("sanitize-html");
 const {onRequest} = require("firebase-functions/v2/https");
-// const {getAppCheck} = require("firebase-admin/app-check"); // App Check
 
 // Initializations
-// initializeApp(); // App Check
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
   tracesSampleRate: 1.0,
@@ -74,26 +71,6 @@ const functionConfig = {
 
 exports.guipt = onRequest(functionConfig, async (request, response) => {
   Sentry.logger.info("GuiPT started");
-
-  // App Check verification // App Check
-  // const appCheckToken = request.headers["X-Firebase-AppCheck"];
-  // try {
-  //   await getAppCheck().verifyToken(appCheckToken);
-  // } catch (error) {
-  //   let message = "";
-  //   if (!appCheckToken) message = "Token not present";
-  //   else message = "Unverified token";
-  //   Sentry.logger.warn("Request not authenticated", {
-  //     message: message,
-  //     appCheckToken: appCheckToken,
-  //     requestQuery: request.query,
-  //     error: error.message,
-  //   });
-  //   await Sentry.flush(2000);
-
-  //   response.status(401).send("Request not authenticated");
-  //   return;
-  // }
 
   // Get user prompt from request
   let userInput = request.query.prompt;
