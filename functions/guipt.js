@@ -27,7 +27,7 @@ const safetySettings = [
 
 // Model configuration
 const modelConfig = {
-  model: "gemini-2.5-flash-lite",
+  model: "gemini-flash-lite-latest",
   config: {
     systemInstruction: instructions,
     temperature: 0.4,
