@@ -1,7 +1,7 @@
 // Imports
 const Sentry = require("@sentry/node");
 const {GoogleGenAI} = require("@google/genai");
-const fs = require("fs");
+const fs = require("node:fs");
 const sanitizeHtml = require("sanitize-html");
 const {onRequest} = require("firebase-functions/v2/https");
 

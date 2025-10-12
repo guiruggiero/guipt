@@ -2,7 +2,7 @@
 import {PROMPT_URL} from "../secrets/guipt.mjs";
 import jsdom from "jsdom";
 import {htmlToText} from "html-to-text";
-import fs from "fs";
+import fs from "node:fs";
 
 // Initialization
 const url = PROMPT_URL;
