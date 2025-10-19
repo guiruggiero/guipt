@@ -26,10 +26,10 @@ A custom AI assistant API built to answer questions about Gui Ruggiero using Goo
 ### 📦 Dependencies
 - `@google/genai` - Gemini API integration
 - `@sentry/node` - Sentry integration
-- `firebase-functions` - serverless backend
-- `sanitize-html` - input sanitization
 - `eslint` - code linting
-- `jsdom` and `html-to-text` - system instruction update
+- `firebase-functions` and `firebase-tools` - serverless backend
+- `html-to-text` and `jsdom` - system instruction update
+- `sanitize-html` - input sanitization
 
 ---
 

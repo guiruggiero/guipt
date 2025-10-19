@@ -1,5 +1,5 @@
 // Imports
-import {PROMPT_URL} from "../secrets/guipt.mjs";
+import {PROMPT_URL} from "../../secrets/guipt.mjs";
 import jsdom from "jsdom";
 import {htmlToText} from "html-to-text";
 import fs from "node:fs";
@@ -20,12 +20,12 @@ const contentText = htmlToText(contentHTML, {wordwrap: null});
 const newPrompt = contentText.replace(/\n{2,}/g, "\n");
 
 // Gets old prompt
-const oldPrompt = fs.readFileSync("functions/prompt.txt", "utf8");
+const oldPrompt = fs.readFileSync("prompt.txt", "utf8");
 // console.log(oldPrompt.length);
 // console.log(newPrompt.length);
 
 // Updates prompt
-fs.writeFileSync("functions/prompt.txt", newPrompt, "utf-8", (error) => {
+fs.writeFileSync("prompt.txt", newPrompt, "utf-8", (error) => {
     if (error) {
         console.error(error);
         return;
