@@ -1,7 +1,7 @@
 // Imports
 const Sentry = require("@sentry/node");
 const {GoogleGenAI} = require("@google/genai");
-const fs = require("node:fs");
+const {LangfuseClient} = require("@langfuse/client");
 const sanitizeHtml = require("sanitize-html");
 const {onRequest} = require("firebase-functions/v2/https");
 
@@ -13,9 +13,11 @@ Sentry.init({
 });
 const apiKey = process.env.GEMINI_API_KEY;
 const ai = new GoogleGenAI({apiKey: apiKey});
-
-// Get system instructions from file
-const instructions = fs.readFileSync("prompt.txt", "utf8");
+const langfuse = new LangfuseClient({
+  secretKey: process.env.LANGFUSE_SECRET_KEY,
+  publicKey: process.env.LANGFUSE_PUBLIC_KEY,
+  baseUrl: "https://us.cloud.langfuse.com",
+});
 
 // Model safety settings
 const safetySettings = [
@@ -33,11 +35,10 @@ const safetySettings = [
 const modelConfig = {
   model: "gemini-flash-lite-latest",
   config: {
-    systemInstruction: instructions,
     temperature: 0.4,
     maxOutputTokens: 400,
     responseMimeType: "text/plain",
-    safetySettings: safetySettings,
+    safetySettings,
     thinkingconfig: {
       thinkingbudget: 0,
     },
@@ -56,15 +57,17 @@ function sanitizeInput(input) {
 };
 
 // Assess guardrails
+const validationErrors = Object.freeze({
+  TOO_LONG: "errorTooLong",
+  FORBIDDEN_CHARS: "errorForbiddenChars",
+});
 function validateInput(input) {
   // Length limit
-  if (input.length > 200) {
-    return "⚠️ Would you mind shortening your message a bit, please?";
-  }
+  if (input.length > 200) return validationErrors.TOO_LONG;
 
   // Character set - excludes @$%&/+
-  if (!/^[A-Za-zÀ-ÖØ-öø-ÿ0-9\s.,!?;:'’"()-]+$/.test(input)) {
-    return "⚠️ Please use only letters, numbers, and common punctuation.";
+  if (!/^[A-Za-zÀ-ÖØ-öø-ÿ0-9\s.,!?;:'’"()+*=@/-]+$/.test(input)) {
+    return validationErrors.FORBIDDEN_CHARS;
   }
 
   return "OK";
@@ -78,70 +81,59 @@ const functionConfig = {
 };
 
 exports.guipt = onRequest(functionConfig, async (request, response) => {
-  Sentry.logger.info("GuiPT started");
+  Sentry.logger.info("[1] GuiPT started");
 
-  // Get user prompt from request
-  let userInput = request.query.prompt;
-  if (!userInput || userInput == " ") {
-    userInput = "Hi! Briefly, who are you and what can you do?";
+  // Get user message from request
+  let userMessage = request.body?.message;
+  if (!userMessage || userMessage.trim() === "") {
+    userMessage = "Hi! Briefly, who are you and what can you do?";
   }
 
   // Sanitize and validate input
-  const sanitizedInput = sanitizeInput(userInput);
-  const validationResult = validateInput(sanitizedInput);
+  const sanitizedMessage = sanitizeInput(userMessage);
+  const validationResult = validateInput(sanitizedMessage);
 
   // Return error message if input doesn't pass validation
   if (validationResult !== "OK") {
-    Sentry.logger.warn("Validation failed", {validationResult});
+    Sentry.logger.warn("[1a] Validation failed", {validationResult});
     await Sentry.flush(2000);
 
-    response.send(validationResult);
+    response.status(400).send(validationResult);
     return;
   }
+
+  // Get model prompt
+  const promptResponse = await langfuse.prompt.get("GuiPT", {
+    cacheTtlSeconds: 180, // 3m cache
+  });
+  const instructions = promptResponse.prompt;
+
+  Sentry.logger.info("[2] Prompt fetched", {
+    version: promptResponse.version,
+    prompt: instructions.substring(0, 200),
+  });
 
   // Get chat history
-  let chatHistory = request.query.history;
-  if (!chatHistory) chatHistory = [];
-
-  // Create a new config object with chat history
-  const chatConfigWithHistory = {
-    ...modelConfig,
-    history: chatHistory,
-  };
+  const chatHistory = request.body?.history || [];
 
   // Initialize chat
-  const chat = ai.chats.create(chatConfigWithHistory);
+  const chat = ai.chats.create({
+    ...modelConfig,
+    config: {
+      ...modelConfig.config,
+      systemInstruction: instructions,
+    },
+    history: chatHistory,
+  });
 
-  Sentry.logger.info("Ready for Gemini call", {sanitizedInput});
+  Sentry.logger.info("[3] Ready for Gemini call", {sanitizedMessage});
 
-  try {
-    // Call Gemini API and send response back
-    const result = await chat.sendMessage({message: sanitizedInput});
-    const guiptResponse = result.text;
-    Sentry.logger.info("GuiPT done", {guiptResponse});
-    response.status(200).send(guiptResponse);
-    return;
-  } catch (error) {
-    // Capture error with request details as context
-    Sentry.captureException(error, {contexts: {
-      turnDetails: {
-        userInput: userInput,
-        userInputLength: userInput.length,
-        sanitizedInput: sanitizedInput,
-        sanitizedInputLength: sanitizedInput.length,
-        validationResult: validationResult,
-      },
-      chatHistory,
-      modelDetails: {
-        model: modelConfig.model,
-        temperature: modelConfig.config.temperature,
-        maxOutputTokens: modelConfig.config.maxOutputTokens,
-        responseMimeType: modelConfig.config.responseMimeType,
-        safetySettings: modelConfig.config.safetySettings,
-      },
-    }});
-    await Sentry.flush(2000);
+  // Call Gemini API
+  const result = await chat.sendMessage({message: sanitizedMessage});
+  const guiptResponse = result.text;
 
-    throw error;
-  }
+  Sentry.logger.info("[4] GuiPT done", {guiptResponse});
+
+  response.status(200).send(guiptResponse);
+  return;
 });
