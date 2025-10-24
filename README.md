@@ -8,20 +8,10 @@
 A custom AI assistant API built to answer questions about Gui Ruggiero using Google Gemini on a Firebase Cloud Function.
 
 ### ✨ Features
-- Gemini Flash Lite model through Gemini API integration for fast responses with multi-language support
-- User input sanitization and validation with custom error messages for security
-- CORS-enabled for website integration
-- System instruction with long context and easter eggs
-- Automated system instruction updates from Google Docs
-- Sentry error tracking and monitoring for debugging
-- Snyk vulnerability scanning
-- SonarQube for code quality and security
-
-### 🛠️ Prerequisites
-- Node.js
-- Firebase CLI
-- Gemini API key
-- Sentry DSN key
+- **Fast responses with multi-language support** using Gemini Flash Lite model through the Gemini API
+- **User input sanitization and validation** with custom error messages for security
+- **CORS-enabled** for website integration
+- **Error tracking** and logging
 
 ### 📦 Dependencies
 - `@google/genai` - Gemini API integration
