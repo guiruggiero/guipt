@@ -1,9 +1,9 @@
 // Imports
-const Sentry = require("@sentry/node");
-const {GoogleGenAI} = require("@google/genai");
-const {LangfuseClient} = require("@langfuse/client");
-const sanitizeHtml = require("sanitize-html");
-const {onRequest} = require("firebase-functions/v2/https");
+import * as Sentry from "@sentry/node";
+import {GoogleGenAI} from "@google/genai";
+import {LangfuseClient} from "@langfuse/client";
+import sanitizeHtml from "sanitize-html";
+import {onRequest} from "firebase-functions/v2/https";
 
 // Initializations
 Sentry.init({
@@ -80,7 +80,7 @@ const functionConfig = {
   timeoutSeconds: 4,
 };
 
-exports.guipt = onRequest(functionConfig, async (request, response) => {
+export const guipt = onRequest(functionConfig, async (request, response) => {
   Sentry.logger.info("[1] GuiPT started");
 
   // Get user message from request

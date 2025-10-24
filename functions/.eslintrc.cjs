@@ -1,10 +1,12 @@
 module.exports = {
+  root: true,
   env: {
     es6: true,
     node: true,
   },
   parserOptions: {
     "ecmaVersion": 2020,
+    "sourceType": "module",
   },
   extends: [
     "eslint:recommended",
@@ -27,5 +29,4 @@ module.exports = {
     },
   ],
   globals: {},
-  ignorePatterns: ["updatePrompt.js"],
 };
