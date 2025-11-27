@@ -9,10 +9,6 @@ import {onRequest} from "firebase-functions/v2/https";
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
   enableLogs: true,
-  integrations: [Sentry.googleGenAIIntegration({
-    recordInputs: true,
-    recordOutputs: true,
-  })],
 });
 const apiKey = process.env.GEMINI_API_KEY;
 const ai = new GoogleGenAI({apiKey: apiKey});
