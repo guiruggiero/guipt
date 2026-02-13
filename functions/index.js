@@ -10,13 +10,8 @@ Sentry.init({
   dsn: process.env.SENTRY_DSN,
   enableLogs: true,
 });
-const apiKey = process.env.GEMINI_API_KEY;
-const ai = new GoogleGenAI({apiKey: apiKey});
-const langfuse = new LangfuseClient({
-  secretKey: process.env.LANGFUSE_SECRET_KEY,
-  publicKey: process.env.LANGFUSE_PUBLIC_KEY,
-  baseUrl: "https://us.cloud.langfuse.com",
-});
+let ai;
+let langfuse;
 
 // Model safety settings
 const safetySettings = [
@@ -81,6 +76,16 @@ const functionConfig = {
 
 export const guipt = onRequest(functionConfig, async (request, response) => {
   Sentry.logger.info("[1] GuiPT started");
+
+  // Initializations with env variables
+  if (!ai) ai = new GoogleGenAI({apiKey: process.env.GEMINI_API_KEY});
+  if (!langfuse) {
+    langfuse = new LangfuseClient({
+      secretKey: process.env.LANGFUSE_SECRET_KEY,
+      publicKey: process.env.LANGFUSE_PUBLIC_KEY,
+      baseUrl: "https://us.cloud.langfuse.com",
+    });
+  }
 
   // Get user message from request
   let userMessage = request.body?.message;
