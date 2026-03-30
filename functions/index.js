@@ -79,7 +79,7 @@ function validateInput(input) {
 const functionConfig = {
   cors: true,
   maxInstances: 5,
-  timeoutSeconds: 4,
+  timeoutSeconds: 8,
 };
 
 export const guipt = onRequest(functionConfig, async (request, response) => {
