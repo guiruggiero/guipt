@@ -33,8 +33,8 @@ const modelConfig = {
     maxOutputTokens: 400,
     responseMimeType: "text/plain",
     safetySettings,
-    thinkingconfig: {
-      thinkingbudget: 0,
+    thinkingConfig: {
+      thinkingBudget: 0,
     },
   },
 };
@@ -52,6 +52,7 @@ function sanitizeInput(input) {
 
 // Assess guardrails
 const validationErrors = Object.freeze({
+  SUCCESS: "OK",
   TOO_LONG: "errorTooLong",
   FORBIDDEN_CHARS: "errorForbiddenChars",
 });
@@ -59,12 +60,12 @@ function validateInput(input) {
   // Length limit
   if (input.length > 200) return validationErrors.TOO_LONG;
 
-  // Character set - excludes @$%&/+
-  if (!/^[A-Za-zÀ-ÖØ-öø-ÿ0-9\s.,!?;:'’"()+*=@/-]+$/.test(input)) {
+  // Character allowlist — blocks $%&
+  if (!/^[A-Za-zÀ-ÖØ-öø-ÿ0-9\s.,!?;:''"()+*=@/-]+$/.test(input)) {
     return validationErrors.FORBIDDEN_CHARS;
   }
 
-  return "OK";
+  return validationErrors.SUCCESS;
 };
 
 // Function configuration
@@ -98,7 +99,7 @@ export const guipt = onRequest(functionConfig, async (request, response) => {
   const validationResult = validateInput(sanitizedMessage);
 
   // Return error message if input doesn't pass validation
-  if (validationResult !== "OK") {
+  if (validationResult !== validationErrors.SUCCESS) {
     Sentry.logger.warn("[1a] Validation failed", {validationResult});
     await Sentry.flush(2000);
 
@@ -137,6 +138,8 @@ export const guipt = onRequest(functionConfig, async (request, response) => {
   const guiptResponse = result.text;
 
   Sentry.logger.info("[4] GuiPT done", {guiptResponse});
+
+  await Sentry.flush(2000);
 
   response.status(200).send(guiptResponse);
   return;
