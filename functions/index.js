@@ -43,7 +43,7 @@ const modelConfig = {
   },
 };
 
-// Sanitization options - strip all HTML
+// Sanitization options - removes all HTML tags/attributes
 const sanitizeOptions = {allowedTags: [], allowedAttributes: {}};
 
 // Sanitize potentially harmful characters
@@ -53,7 +53,7 @@ function sanitizeInput(input) {
   sanitizedInput = sanitizeHtml(
     sanitizedInput,
     sanitizeOptions,
-  ); // Remove HTML tags/attributes
+  );
   return sanitizedInput;
 };
 
@@ -88,7 +88,7 @@ export const guipt = onRequest(functionConfig, async (request, response) => {
   // Get user message from request
   let userMessage = request.body?.message;
   if (!userMessage || userMessage.trim() === "") {
-    userMessage = "Hi! Briefly, who are you and what can you do?";
+    userMessage = "Hi! In a sentence, who are you and what can you do?";
   }
 
   // Sanitize and validate input
