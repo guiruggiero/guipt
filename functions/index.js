@@ -33,12 +33,11 @@ const safetySettings = [
 const modelConfig = {
   model: "gemini-flash-lite-latest",
   config: {
-    temperature: 0.4,
     maxOutputTokens: 400,
     responseMimeType: "text/plain",
     safetySettings,
     thinkingConfig: {
-      thinkingBudget: 0,
+      thinkinglevel: "minimal",
     },
   },
 };
