@@ -10,8 +10,12 @@ Sentry.init({
   dsn: process.env.SENTRY_DSN,
   enableLogs: true,
 });
-let ai;
-let langfuse;
+const ai = new GoogleGenAI({apiKey: process.env.GEMINI_API_KEY});
+const langfuse = new LangfuseClient({
+  secretKey: process.env.LANGFUSE_SECRET_KEY,
+  publicKey: process.env.LANGFUSE_PUBLIC_KEY,
+  baseUrl: "https://us.cloud.langfuse.com",
+});
 
 // Model safety settings
 const safetySettings = [
@@ -39,14 +43,17 @@ const modelConfig = {
   },
 };
 
+// Sanitization options - strip all HTML
+const sanitizeOptions = {allowedTags: [], allowedAttributes: {}};
+
 // Sanitize potentially harmful characters
 function sanitizeInput(input) {
   let sanitizedInput = input.replace(/\s+/g, " "); // Normalize whitespace
   sanitizedInput = sanitizedInput.trim(); // Remove whitespace from both ends
-  sanitizedInput = sanitizeHtml(sanitizedInput, { // Remove HTML tags/attributes
-    allowedTags: [],
-    allowedAttributes: {},
-  });
+  sanitizedInput = sanitizeHtml(
+    sanitizedInput,
+    sanitizeOptions,
+  ); // Remove HTML tags/attributes
   return sanitizedInput;
 };
 
@@ -78,16 +85,6 @@ const functionConfig = {
 export const guipt = onRequest(functionConfig, async (request, response) => {
   Sentry.logger.info("[1] GuiPT started");
 
-  // Initializations with env variables
-  if (!ai) ai = new GoogleGenAI({apiKey: process.env.GEMINI_API_KEY});
-  if (!langfuse) {
-    langfuse = new LangfuseClient({
-      secretKey: process.env.LANGFUSE_SECRET_KEY,
-      publicKey: process.env.LANGFUSE_PUBLIC_KEY,
-      baseUrl: "https://us.cloud.langfuse.com",
-    });
-  }
-
   // Get user message from request
   let userMessage = request.body?.message;
   if (!userMessage || userMessage.trim() === "") {
@@ -101,9 +98,10 @@ export const guipt = onRequest(functionConfig, async (request, response) => {
   // Return error message if input doesn't pass validation
   if (validationResult !== validationErrors.SUCCESS) {
     Sentry.logger.warn("[1a] Validation failed", {validationResult});
-    await Sentry.flush(2000);
 
     response.status(400).send(validationResult);
+
+    await Sentry.flush(2000);
     return;
   }
 
@@ -139,8 +137,8 @@ export const guipt = onRequest(functionConfig, async (request, response) => {
 
   Sentry.logger.info("[4] GuiPT done", {guiptResponse});
 
-  await Sentry.flush(2000);
-
   response.status(200).send(guiptResponse);
+
+  await Sentry.flush(2000);
   return;
 });

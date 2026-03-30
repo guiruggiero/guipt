@@ -26,7 +26,7 @@ GuiPT is a single Firebase Cloud Function (`functions/index.js`) that serves as 
 6. Return plain text response
 
 **Key design details:**
-- Clients (`GoogleGenAI`, `Langfuse`) are lazily initialized on first request, not at cold start
+- Clients (`GoogleGenAI`, `Langfuse`) are initialized at cold start (module scope); the Langfuse prompt is fetched per-request with a 3-minute cache to pick up prompt changes
 - Chat history is passed in from the request body (stateless function)
 - Safety filters block harassment/hate/explicit at `LOW_AND_ABOVE`, dangerous content at `MEDIUM_AND_ABOVE`
 - Max 5 concurrent instances, 4-second timeout, CORS enabled
