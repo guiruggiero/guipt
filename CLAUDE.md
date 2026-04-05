@@ -11,11 +11,9 @@ npm run lint      # ESLint check (also runs automatically before deploy)
 npm run deploy    # Deploy to Firebase (runs lint first via predeploy hook)
 ```
 
-There are no test scripts.
-
 ## Architecture
 
-GuiPT is a single Firebase Cloud Function (`functions/index.js`) that serves as an AI assistant API answering questions about Gui. The entire backend is one file (~144 lines).
+GuiPT is a single Firebase Cloud Function (`functions/index.js`) that serves as an AI assistant API answering questions about Gui. The entire backend is one file and is used as the API to the frontend on `website`. When changing the API contract (request/response shape, error codes, timeouts), both repos need updating together.
 
 **Request pipeline:**
 1. Input sanitization — strips HTML tags, normalizes whitespace
