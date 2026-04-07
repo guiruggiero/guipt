@@ -1,3 +1,5 @@
+> **Archived:** The GuiPT Cloud Function has been migrated into the [website](https://github.com/guiruggiero/website) repository (`functions/`). This repo is kept for historical reference only.
+
 [![CodeQL](https://github.com/guiruggiero/guipt/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/guiruggiero/guipt/actions/workflows/github-code-scanning/codeql)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=guiruggiero_guipt&metric=bugs)](https://sonarcloud.io/summary/new_code?id=guiruggiero_guipt)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=guiruggiero_guipt&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=guiruggiero_guipt)

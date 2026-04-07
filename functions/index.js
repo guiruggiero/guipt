@@ -37,7 +37,7 @@ const modelConfig = {
     responseMimeType: "text/plain",
     safetySettings,
     thinkingConfig: {
-      thinkinglevel: "minimal",
+      thinkingLevel: "minimal",
     },
   },
 };
